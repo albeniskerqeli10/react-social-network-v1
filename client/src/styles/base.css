@@ -1,0 +1,35 @@
+
+
+body  {
+  margin:0;
+  padding:0;
+  
+}
+
+textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  transform: translateY(10px);
+  text-align: left;
+  color:black;
+  opacity:0.8;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  line-height:70px;
+  text-align: center; 
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  line-height:70px;
+  text-align: center; 
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  line-height:70px;
+  text-align: center; 
+}
+
+button {
+  cursor: pointer;
+}
+
+

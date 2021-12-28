@@ -1,0 +1,62 @@
+{
+  "name": "react-social-network",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node --transpile-only src/index.ts",
+    "start:nodemon": "./node_modules/nodemon/bin/nodemon.js",
+    "start:prod": "npm run build && node ./dist/src/index.js",
+      "start_windows": "set NODE_ENV=production&&node /dist/src/index.js",
+
+    "build": "npx tsc",
+    "postinstall": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "react-social-network"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "author": "Albenis Kerqeli",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
+    "@types/node": "^16.11.11",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.27.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crossenv": "^0.0.2-security",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.11",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "multer-storage-cloudinary": "^4.0.0",
+    "path": "^0.12.7",
+    "react-redux": "^7.2.5",
+    "streamifier": "^0.1.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
+    "@types/streamifier": "^0.1.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.15",
+    "ts-node-dev": "^1.1.8"
+  }
+}
