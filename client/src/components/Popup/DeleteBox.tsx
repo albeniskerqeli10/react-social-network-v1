@@ -1,4 +1,5 @@
 import { deletePost } from "@api/PostApi";
+import { singleUserKey } from "@hooks/useSingleUser";
 import Button from "@shared/Button";
 import Modal from "@shared/Modal";
 import { useState } from "react";
@@ -19,6 +20,8 @@ const DeleteBox = ({id}:DeleteBoxProps) => {
   const deleteMutation = useMutation(deletePost , {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(singleUserKey);
+
 
     }
   })

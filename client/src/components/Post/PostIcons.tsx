@@ -1,4 +1,5 @@
 import { likePost, unlikePost } from "@api/PostApi";
+import { singleUserKey } from "@hooks/useSingleUser";
 import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FiMessageSquare } from "@react-icons/all-files/fi/FiMessageSquare";
@@ -7,7 +8,6 @@ import SaveIcon from "@shared/SaveIcon";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { queryClient } from "../../App";
-
 interface GroupIcons {
   likes?: Array<string>;
   id: string;
@@ -22,22 +22,27 @@ const PostIcons = ({
 }: GroupIcons) => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const likeMutation = useMutation(likePost , {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries("posts");
-    },
-    onError: (err) => {
-      console.error(err);
-    },
+    onSuccess:() => {
+      queryClient.invalidateQueries('posts');
+      queryClient.invalidateQueries(singleUserKey);
+
+    }
+    
   });
 
   const unlikeMutation = useMutation(unlikePost, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(singleUserKey);
     },
     onError: () => {
-      ("Err");
     },
   });
+
+
+
+
+  
 
   return (
     <div className="w-full  mx-1 py-4 flex text-center flex-row items-center justify-between">

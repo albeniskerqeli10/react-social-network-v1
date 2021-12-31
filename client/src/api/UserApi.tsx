@@ -97,9 +97,10 @@ export const loginUser = async(data:AuthProps) => {
      return  res.data
 
   }
-  catch(err:unknown)  {
+  catch(err)  {
     return new Promise((resolve, reject) => {
       reject(err)
+      console.log(err);
     })
     
   }

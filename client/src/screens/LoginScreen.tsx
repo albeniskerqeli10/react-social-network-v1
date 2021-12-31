@@ -71,7 +71,7 @@ const LoginScreen: FC = () => {
           />
           {errors.email && (
             <div
-              className=" w-full px-4  flex flex-row flex-1 items-center justify-center  py-4 mb-4 leading-normal text-white  bg-red-500 rounded-lg"
+              className=" w-full px-4  flex flex-row flex-1 items-center justify-center  py-4 my-4 leading-normal text-white  bg-red-500 rounded-lg"
               role="alert"
             >
               <p>Please write a valid email</p>

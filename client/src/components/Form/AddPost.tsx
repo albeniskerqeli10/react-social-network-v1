@@ -17,8 +17,36 @@ interface ISubmitForm {
   const { register, reset, handleSubmit } = useForm();
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 const [customErr , setCustomErr] = useState('');
-  const mutations = useMutation(addPost
-  );
+  // const mutations = useMutation(addPost
+  // );
+
+  const mutations = useMutation(addPost as any, {
+    // When mutate is called:
+    onMutate: async (newPost:any) => {
+      // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries("posts")
+  
+      // Snapshot the previous value
+      const previousPosts = queryClient.getQueryData("posts")
+  
+      // Optimistically update to the new value
+      queryClient.setQueryData('posts', (old:[] | any) => [...old, newPost])
+  
+      // Return a context object with the snapshotted value
+      return { previousPosts }
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    onError: (err, newPost, context):any => {
+      queryClient.setQueryData('posts', context?.previousPosts)
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries('posts')
+    },
+  })
+  
+  
+
 
   const [fileName, setFileName] = useState<Blob | File | string>('');
   const [selectedImg, setSelectedImg] = useState<string>("");
@@ -56,11 +84,6 @@ const target = e.target as HTMLInputElement;
       formData.append("text", data.textarea);
       formData.append("image", fileName);
       mutations.mutate(formData , {
-        onSuccess:() => {
-          queryClient.invalidateQueries("posts");
-          setCustomErr('');
-
-        }
       });
 
       setSelectedImg("");
@@ -76,11 +99,11 @@ const target = e.target as HTMLInputElement;
           <Avatar alt="User avatar" radius="sm" src={currentUser.avatar} />
         </div>
         <div className="flex md:w-auto w-full flex-1  items-center justify-center  flex-wrap flex-row">
-          <textarea
+          <input
             {...register("textarea")}
-            className="flex w-32 md:w-auto  md:mx-1 mx-2 items-center   md:flex-1  flex-initial font-bold  my-2  px-1  resize-none self-center  "
+            className="flex w-32 md:w-auto  break-all text-ellipsis md:mx-1 mx-2 items-center   md:flex-1  flex-initial font-bold py-3  my-2  px-1  resize-none self-center  "
             placeholder="Write Something"
-          ></textarea>
+          />
           <label
             className="bg-zinc-900  my-1 p-3 text-white font-inter hover:bg-primary cursor-pointer focus:ring-primary gap-2 focus:ring-opacity-50 flex flex-row flex-wrap items-center justify-center  mx-1  rounded-lg  md:flex-initial"
             htmlFor="upload"
