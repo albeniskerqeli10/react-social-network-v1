@@ -100,7 +100,6 @@ export const loginUser = async(data:AuthProps) => {
   catch(err)  {
     return new Promise((resolve, reject) => {
       reject(err)
-      console.log(err);
     })
     
   }

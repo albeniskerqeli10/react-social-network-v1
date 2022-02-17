@@ -8,8 +8,7 @@ interface SingleUserProps {
 }
 export const singleUserKey = "FETCH SINGLE USER";
 const useSingleUser = ({ id }: SingleUserProps) => {
-  return useQuery([singleUserKey, id], fetchSingleUser, {suspense:true,
-    refetchOnWindowFocus: false,
+  return useQuery([singleUserKey, id], fetchSingleUser, {
     onSuccess:(data:IUser)=>{}
   });
 };

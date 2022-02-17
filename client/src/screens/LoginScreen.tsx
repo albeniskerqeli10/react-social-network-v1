@@ -1,17 +1,17 @@
 import { loginUser } from "@api/UserApi";
 import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import { addNewUser } from "@redux/slices/userSlice";
-import { RootState } from "@redux/store";
 import Button from "@shared/Button";
-import { FC, useEffect, useState } from "react";
+import {useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import {Navigate, useLocation } from "react-router-dom";
 import { AuthProps, IUser } from "../types/UserInterfaces";
+import useAuth from "../hooks/useAuth";
 
-const LoginScreen: FC = () => {
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+const LoginScreen = () => {
+  const currentUser = useAuth();
 
   const {
     register,
@@ -19,15 +19,14 @@ const LoginScreen: FC = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+const location = useLocation();
   const [customErr, setCustomErr] = useState<string>("");
-  useEffect(() => {
-    currentUser !== null && navigate("/");
-  }, [currentUser, navigate]);
-  const mutations = useMutation(loginUser, {
+
+  const {mutate} = useMutation(loginUser, {
     onSuccess: (data) => {
-      localStorage.setItem("userDetails", JSON.stringify(data));
       dispatch(addNewUser(data as IUser));
+
+      localStorage.setItem("userDetails", JSON.stringify(data));
       setCustomErr("");
     },
     onError: (err:any) => {
@@ -40,7 +39,7 @@ const LoginScreen: FC = () => {
 
   const handleLogin = (data: AuthProps) => {
     if (data.email !== "" || data.password !== "") {
-      mutations.mutate({
+      mutate({
         email: data.email,
         password: data.password,
       });
@@ -48,10 +47,11 @@ const LoginScreen: FC = () => {
   };
 
   return (
+    currentUser=== null ? (
     <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] lg:mt-20">
       <form
         onSubmit={handleSubmit(handleLogin)}
-        className="flex  w-[90%] md:w-auto  bg-white items-center justify-center  flex-col flex-wrap shadow-md rounded px-4 pt-6 pb-8 mb-4"
+        className="flex  w-[100%] md:w-[300px]  bg-white items-center justify-center  flex-col flex-wrap shadow-md rounded min-h-[300px] px-4 py-10 mb-4"
       >
         <div className="mb-6 w-full flex flex-wrap flex-col items-start justify-center">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -129,7 +129,7 @@ const LoginScreen: FC = () => {
           />
         </div>
       </form>
-    </div>
+    </div>):<Navigate to="/" state={{ from: location }} replace/>
   );
 };
 

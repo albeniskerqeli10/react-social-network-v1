@@ -1,11 +1,9 @@
 import { addComment } from '@api/PostApi';
+import useAuth from '@hooks/useAuth';
 import Avatar from "@shared/Avatar";
-import { memo } from 'react';
 import { useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "@redux/store";
 import { CommentDataObj, IComment } from "types/CommentInterfaces";
 import { queryClient } from "../../App";
 
@@ -14,15 +12,15 @@ export const singleCommentKey = "SINGLE COMMENT KEY";
  
 interface AddCommentProps  {
   id:string ;
-  commentStateChange:() => void;
+  handleCommentState:() => void;
 
 }
 
-const AddComment = memo(({id , commentStateChange}:AddCommentProps) => {
+const AddComment = ({id , handleCommentState}:AddCommentProps) => {
   const { register ,  handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const currentUser = useAuth();
 
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const commentMutation = useMutation(addComment , {
     onSuccess: (data) => {
       queryClient.invalidateQueries(singleCommentKey);
@@ -41,7 +39,7 @@ const AddComment = memo(({id , commentStateChange}:AddCommentProps) => {
       alert("Type something to add a comment");
     } else {
       commentMutation.mutate(commentData);
-      commentStateChange();
+      handleCommentState();
       reset();
     }
   };
@@ -64,6 +62,5 @@ const AddComment = memo(({id , commentStateChange}:AddCommentProps) => {
     </form>
   </div>
   )
-});
-
+};
 export default AddComment;

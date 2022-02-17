@@ -1,11 +1,11 @@
 import Search from '@components/Search/Search';
+import useAuth from '@hooks/useAuth';
 import { AiOutlineSearch } from '@react-icons/all-files/ai/AiOutlineSearch';
 import { BiMessageSquareDetail } from '@react-icons/all-files/bi/BiMessageSquareDetail';
 import { logoutUser } from "@redux/slices/userSlice";
-import { RootState } from "@redux/store";
 import Avatar from '@shared/Avatar';
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
  
@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch  =  useDispatch();
+  const currentUser = useAuth();
+
   const [toggleDropdown,setToggleDropdown] = React.useState<boolean>(false);
-  const currentUser = useSelector((state:RootState) => state.user.currentUser)
   function handleLogout()  {
     dispatch(logoutUser());
     setToggleDropdown(!toggleDropdown);
@@ -25,8 +26,8 @@ const Navbar = () => {
     setToggleDropdown(!toggleDropdown);
   }
   return (
-    <header className="w-full  lg:fixed  top-0 z-40 shadow-box min-h-[70px]   bg-white flex flex-row flex-wrap items-center justify-center ">
-      <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center flex-wrap md:flex-nowrap gap-5">
+    <header className="w-full  lg:fixed  top-0 z-40 shadow-box min-h-[70px]   bg-white flex flex-row flex-nowrap items-center justify-center ">
+      <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center   md:flex-nowrap flex-wrap gap-5 ">
 
         <div className="w-80 py-4 flex flex-row items-center justify-center flex-wrap ">
           <Link to="/" className="mx-2 text-lg text-primary hover:text-slate-900 font-bold ">
@@ -66,7 +67,7 @@ const Navbar = () => {
 
  <div className="relative inline-block text-left">
   <div>
-  <Avatar onClick={() => setToggleDropdown(!toggleDropdown)}  alt="User Avatar"
+  <Avatar onClick={toggleDropdownHandler}  alt="User Avatar"
  src={currentUser.avatar}/>
   </div>
 {toggleDropdown && (<div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-box flex items-center justify-start flex-wrap mx-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>

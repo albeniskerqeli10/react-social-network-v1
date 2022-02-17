@@ -1,16 +1,16 @@
 import EditProfile from "@components/Form/EditProfile";
 import CustomPost from "@components/Post/CustomPost";
 import useSingleUser from "@hooks/useSingleUser";
-import { RootState } from "@redux/store";
 import Button from "@shared/Button";
 import Loader from "@shared/Loader";
-import { FC, useState } from 'react';
-import { useSelector } from "react-redux";
+import {  Suspense, useState } from 'react';
 import { IPost } from "types/PostInterfaces";
+import useAuth from "@hooks/useAuth";
 
-const ProfileScreen:FC = () => {
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+const ProfileScreen = () => {
   const [editProfile , setEditProfile] = useState(false);
+  const currentUser = useAuth();
+
   const id: string = currentUser?._id;
 
   const { data: user } = useSingleUser({ id });

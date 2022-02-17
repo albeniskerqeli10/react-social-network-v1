@@ -1,7 +1,7 @@
 import { IPost } from 'types/PostInterfaces';
 
 export interface IUser {
-  _id: string ;
+  _id: string;
   username: string ;
   email: string;
   avatar: string ;

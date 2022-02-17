@@ -20,8 +20,10 @@ const EditProfile = () => {
 const {register,handleSubmit} = useForm();
 const handleAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
   if (e.target.files) {
+          e.preventDefault();
+
       const file = e.target.files[0];
-      e.preventDefault();
+
       new Compressor(file, {
         quality: 0.6, // 0.6 can also be used, but its not recommended to go below.
         // convertTypes:['image/png', 'image/webp', 'images/jpg'],
@@ -63,6 +65,10 @@ const  handleEdit = (data:AuthProps) => {
 
   }
 
+const handleOpen = () => {
+  setOpen(!open);
+}
+
   return(
     <Modal open={open} onClose={handleClose} >
     <h1>Edit Profile</h1>
@@ -102,7 +108,7 @@ const  handleEdit = (data:AuthProps) => {
       />
       <div className="w-full flex flex-row py-3 items-end justify-end flex-wrap gap-1">
 
-        <Button margin={1.5} bgColor="white" size="sm" borderColor='gray-300' textColor='gray-700' rounded="md" title="Cancel" type="button" onClick={() => setOpen(false)} >
+        <Button margin={1.5} bgColor="white" size="sm" borderColor='gray-300' textColor='gray-700' rounded="md" title="Cancel" type="button" onClick={handleOpen} >
           Cancel
         </Button>
         <Button title='Submit' size='sm' textColor='white' rounded='md' bgColor='primary' margin={1} onClick={handleSubmit(handleEdit)}/>

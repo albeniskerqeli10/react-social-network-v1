@@ -1,13 +1,12 @@
 import { addPost } from "@api/PostApi";
+import useAuth from "@hooks/useAuth";
 import { FiImage } from "@react-icons/all-files/fi/FiImage";
-import { RootState } from "@redux/store";
 import Avatar from "@shared/Avatar";
 import Button from "@shared/Button";
 import Compressor from "compressorjs";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
 import { queryClient } from "../../App";
 
 interface ISubmitForm {
@@ -15,10 +14,8 @@ interface ISubmitForm {
 }
  function AddPost()  {
   const { register, reset, handleSubmit } = useForm();
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const currentUser = useAuth();
 const [customErr , setCustomErr] = useState('');
-  // const mutations = useMutation(addPost
-  // );
 
   const mutations = useMutation(addPost as any, {
     // When mutate is called:
@@ -39,10 +36,7 @@ const [customErr , setCustomErr] = useState('');
     onError: (err, newPost, context):any => {
       queryClient.setQueryData('posts', context?.previousPosts)
     },
-    // Always refetch after error or success:
-    onSettled: () => {
-      queryClient.invalidateQueries('posts')
-    },
+
   })
   
   

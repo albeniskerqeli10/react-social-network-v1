@@ -1,4 +1,4 @@
-import { IComment } from "./CommentInterfaces";
+import { IComment } from 'types/CommentInterfaces';
 
 export interface IPost {
   _id:string ;
@@ -12,10 +12,7 @@ export interface IPost {
   comments?:Array<IComment>;
   post?:any;
   user?:any;
-  
 }
-
-
 
 export interface LikeProps {
   message: string;

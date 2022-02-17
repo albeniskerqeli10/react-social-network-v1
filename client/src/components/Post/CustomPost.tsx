@@ -1,14 +1,14 @@
 
 import DeleteBox from "@components/Popup/DeleteBox";
+import useAuth from "@hooks/useAuth";
 import { BiTrash } from '@react-icons/all-files/bi/BiTrash';
-import { RootState } from "@redux/store";
 import Avatar from "@shared/Avatar";
 import React, { memo } from 'react';
-import { useSelector } from 'react-redux';
-import { IPost } from "types/PostInterfaces";k
+import { IPost } from "types/PostInterfaces";
 import AddComment from "./AddComment";
 import Comment from './Comment';
 import PostIcons from "./PostIcons";
+
 
 interface ICustomPost {
   post: IPost;
@@ -20,8 +20,8 @@ function CustomPost({
 }: ICustomPost)  {
   const [showComments, setShowComments] = React.useState<boolean>(false);
 const [showPopup , setShowPopup] = React.useState<boolean>(false);
-const currentUser = useSelector((state:RootState)=> state.user.currentUser);
   const formatedDate= new Date(post.createdAt as Date).toLocaleDateString(); 
+  const currentUser = useAuth();
 
   return (
     <div key={post._id} className="w-[500px]  flex-wrap  shadow-lg shadow-slate-300/50 flex items-center justify-center mx-1 md:ml-10 flex-col bg-white">
@@ -58,7 +58,7 @@ const currentUser = useSelector((state:RootState)=> state.user.currentUser);
       )}
       {showComments && <Comment id={post._id} />}
 
-{<AddComment commentStateChange={() => setShowComments(true)} id={post._id} />}
+{<AddComment handleCommentState={() => setShowComments(true)} id={post._id} />}
       { showPopup && <DeleteBox id={post._id}/> }
     </div>}
 

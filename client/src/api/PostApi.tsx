@@ -8,10 +8,12 @@ import { AxiosAPI } from "./base";
 export async function fetchPosts() {
   try{
  const response =  await AxiosAPI.get(`${process.env.REACT_APP_API_URL}posts`,);
- return response.data as IPost[]
+ return response.data as IPost[];
   }
   catch(err) {
+   new Promise((resolve,reject) => {
     return Promise.reject(err);
+   })
   }
 
 }

@@ -1,12 +1,12 @@
 import { registerUser } from '@api/UserApi';
 import { addNewUser } from "@redux/slices/userSlice";
-import { RootState } from "@redux/store";
 import Button from '@shared/Button';
 import Compressor from 'compressorjs';
 import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import useAuth from "@hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { AuthProps, IUser } from 'types/UserInterfaces';
 
@@ -14,10 +14,10 @@ import { AuthProps, IUser } from 'types/UserInterfaces';
 
 const RegisterScreen: React.FC = () => {
   const { register, handleSubmit } = useForm();
+  const currentUser = useAuth();
 const navigate = useNavigate();
   const [avatar, setAvatar] = useState<string | Blob>("");
   const dispatch = useDispatch();
-  const currentUser = useSelector((state:RootState) => state.user.currentUser)
 
   const userMutation = useMutation(registerUser , {
     onSuccess:({data}) => {

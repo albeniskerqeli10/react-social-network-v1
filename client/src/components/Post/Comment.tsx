@@ -1,20 +1,19 @@
 import { BiTrash } from '@react-icons/all-files/bi/BiTrash';
 import { useMutation, useQuery } from "react-query";
-import { useSelector } from 'react-redux';
 import { deleteComment, fetchComments } from "@api/PostApi";
 import { queryClient } from "../../App";
-import { RootState } from '@redux/store';
 import Avatar from "@shared/Avatar";
 import { IComment } from "types/CommentInterfaces";
 import { singleCommentKey } from './AddComment';
+import useAuth from '@hooks/useAuth';
 ;
 ;
 function Comment({id}: {id:string  }){
-  const currentUser = useSelector((state:RootState) => state.user.currentUser)
   const { data:comments } = useQuery([singleCommentKey, id],  fetchComments, {
     onSuccess: (comments: IComment[]) => {
     },
   });
+  const currentUser = useAuth();
 
  const deleteCommentMutation =  useMutation(deleteComment  ,  {
   onSuccess:() => {

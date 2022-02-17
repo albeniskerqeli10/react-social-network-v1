@@ -1,4 +1,4 @@
-export interface IComment  {
+export interface IComment{
   _id:string;
   postId?:string;
   user:string;
@@ -9,11 +9,11 @@ export interface IComment  {
 
 }
 
-export interface CommentsDataProps  {
+export interface CommentsDataProps {
   data?:IComment[],
 }
 
-export interface CommentDataObj extends CommentsDataProps  {
+export interface CommentDataObj extends CommentsDataProps {
   id:string;
   content:string;
- }
+}

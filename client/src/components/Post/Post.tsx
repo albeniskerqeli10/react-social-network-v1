@@ -1,15 +1,27 @@
+import DeleteBox from '@components/Popup/DeleteBox';
 
-import DeleteBox from "@components/Popup/DeleteBox";
 import { BiTrash } from '@react-icons/all-files/bi/BiTrash';
-import { RootState } from "@redux/store";
-import Avatar from "@shared/Avatar";
-import { memo, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { IPost } from "types/PostInterfaces";
-import AddComment from "./AddComment";
-import Comment from "./Comment";
-import PostIcons from "./PostIcons";
+
+import { RootState } from '@redux/store';
+
+import Avatar from '@shared/Avatar';
+import SmallSpinner from '@shared/SmallSpinner';
+import SuspenseWrapper from '@shared/SuspenseWrapper';
+
+import { Suspense, lazy,useState } from 'react';
+
+import { useSelector } from 'react-redux';
+
+import { Link, useNavigate } from 'react-router-dom';
+
+import { IPost } from 'types/PostInterfaces';
+import AddComment from './AddComment';
+import Comment from './Comment';
+
+import PostIcons from './PostIcons';
+const Image = lazy(() => import("@shared/Image" /* webpackChunkName: "Image" */));
+
+
 function Post({
   _id,
   avatar,
@@ -22,12 +34,20 @@ function Post({
 
   comments,
 }: IPost)  {
+
   const currentUser = useSelector(
     (state: RootState) => state.user.currentUser
   );
   const [showComments, setShowComments] = useState<boolean>(false);
 const [showPopup , setShowPopup] = useState<boolean>(false);
 
+const handleCommentState = () => {
+  setShowComments(!showComments);
+}
+
+const handlePopup = () => {
+  setShowPopup(!showPopup);
+}
   const navigate= useNavigate();
   return (
     <article
@@ -48,7 +68,7 @@ const [showPopup , setShowPopup] = useState<boolean>(false);
           </div>
         </div>
         <div className="w-auto flex mx-1 items-center justify-center flex-row flex-wrap my-4">
-          {user === currentUser._id ? <i onClick={() => setShowPopup(!showPopup)} className=" cursor-pointer p-1 "> <BiTrash color="#DC2626
+          {user === currentUser._id ? <i onClick={handlePopup} className=" cursor-pointer p-1 "> <BiTrash color="#DC2626
 " className="hover:text-slate-900" size="1.5em"  /></i> : ""}
         </div>
       </div>
@@ -58,12 +78,13 @@ const [showPopup , setShowPopup] = useState<boolean>(false);
           {text}
         </div>
         {image && (
-          <img
-            loading="lazy"
-            className="object-cover  my-3 max-w-full  max-h-auto	drop-shadow-md w-[100%]	  rounded-sm "
-            src={image}
+
+          <Image
+         
+            src={ image}
             alt="Avatar"
           />
+
         )}
       </div>
 
@@ -77,10 +98,10 @@ const [showPopup , setShowPopup] = useState<boolean>(false);
         </div>
       )}
 
-      { <AddComment commentStateChange={() => setShowComments(true)} id={_id} />}
+      { <AddComment handleCommentState={handleCommentState} id={_id} />}
       {showComments && <Comment id={_id} />}
       { showPopup && <DeleteBox id={_id}/> }
     </article>
   );
 }
-export default memo(Post);
+export default Post;

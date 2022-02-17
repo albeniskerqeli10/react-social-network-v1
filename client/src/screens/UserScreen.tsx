@@ -1,17 +1,16 @@
 import { followUser, unfollowUser } from "@api/UserApi";
 import CustomPost from "@components/Post/CustomPost";
 import useSingleUser, { singleUserKey } from "@hooks/useSingleUser";
-import { RootState } from "@redux/store";
 import Button from "@shared/Button";
 import Loader from "@shared/Loader";
-import React, { FC } from "react";
+import React from "react";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import useAuth from "@hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { IPost } from "types/PostInterfaces";
 import { queryClient } from "../App";
-const UserScreen:FC = () => {
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+const UserScreen = () => {
+  const currentUser = useAuth();
   const { id } = useParams() as { 
     id: string;
   }
@@ -58,7 +57,7 @@ const UserScreen:FC = () => {
             <div className="self-center">
               <img
                 className="mx-2 my-1 p-2 w-32 h-32 rounded-full object-center object-cover"
-                src={user.avatar as string}
+                src={user.avatar as string} alt="user avatar"
               />
             </div>
             <div className="flex flex-col items-center justify-center gap-3 ">

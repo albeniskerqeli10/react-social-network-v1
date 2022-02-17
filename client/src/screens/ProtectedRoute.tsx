@@ -1,15 +1,18 @@
 
 import React from "react";
-import { useSelector } from 'react-redux';
-import { useNavigate, Route , Navigate,Outlet} from "react-router-dom";
-import { RootState } from "@redux/store";
-  function ProtectedRoute() {
-    const currentUser = useSelector((state:RootState) => state.user.currentUser);
-    const navigate = useNavigate();
-    return (
-     
-          currentUser!= null ? <Outlet />: <Navigate to="/login" />
-    )
+import {useLocation, Navigate} from "react-router-dom";
+import useAuth from "@hooks/useAuth";
+  function ProtectedRoute({children}:{children:JSX.Element}) {
+        const currentUser = useAuth();
+
+        const location = useLocation();
+    if(currentUser === null){
+return <Navigate to="/login" state={{ from: location }} replace/>
+    }
+    else {
+          return children
+
+    }
         }
   
   

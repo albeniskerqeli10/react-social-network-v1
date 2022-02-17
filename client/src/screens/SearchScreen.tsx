@@ -3,11 +3,12 @@ import Button from '@shared/Button';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '@redux/store';
+import useAuth from '@hooks/useAuth';
 const SearchScreen = () => {
   const navigate = useNavigate();
+  const currentUser= useAuth();
   // grabbing data from redux-toolkit slice
   const searchResults = useSelector((state:RootState) => state.user.usersList);
-  const currentUser = useSelector((state:RootState) => state.user.currentUser);
 // a function to redirect user to it's page
   const redirectUser =function(id:string ) {
     // redirect to profile page  if user id is same as active user id
