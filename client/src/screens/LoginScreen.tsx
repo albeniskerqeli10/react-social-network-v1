@@ -2,13 +2,13 @@ import { loginUser } from "@api/UserApi";
 import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import { addNewUser } from "@redux/slices/userSlice";
 import Button from "@shared/Button";
-import {useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import {Navigate, useLocation } from "react-router-dom";
-import { AuthProps, IUser } from "../types/UserInterfaces";
+import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { AuthProps, IUser } from "../types/UserInterfaces";
 
 const LoginScreen = () => {
   const currentUser = useAuth();
@@ -19,35 +19,32 @@ const LoginScreen = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-const location = useLocation();
+  const location = useLocation();
   const [customErr, setCustomErr] = useState<string>("");
 
-  const {mutate} = useMutation(loginUser, {
-    onSuccess: (data) => {
-      dispatch(addNewUser(data as IUser));
-
-      localStorage.setItem("userDetails", JSON.stringify(data));
-      setCustomErr("");
-    },
-    onError: (err:any) => {
-      const { message } = err?.response.data;
-      setCustomErr(message);
-
-    },
-  });
-
+  const { mutate } = useMutation(loginUser);
 
   const handleLogin = (data: AuthProps) => {
     if (data.email !== "" || data.password !== "") {
-      mutate({
-        email: data.email,
-        password: data.password,
-      });
+      mutate(
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          onSuccess: (data) => {
+            dispatch(addNewUser(data as IUser));
+            localStorage.setItem("userDetails", JSON.stringify(data));
+            setCustomErr("");
+          },
+
+          onError: (error) => {},
+        }
+      );
     }
   };
 
-  return (
-    currentUser=== null ? (
+  return currentUser === null ? (
     <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] lg:mt-20">
       <form
         onSubmit={handleSubmit(handleLogin)}
@@ -60,8 +57,8 @@ const location = useLocation();
           <input
             {...register("email", {
               required: true,
-              pattern:
-                /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+              // pattern:
+              //   /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
             })}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
             id="username"
@@ -120,16 +117,18 @@ const location = useLocation();
         <div className="w-full flex items-center  flex-row flex-wrap justify-center">
           <Button
             type="submit"
-            bgColor="primary"
+            bgColor="bg-deepBlue"
             margin="1"
-           size="fluid"
+            size="fluid"
             textColor="white"
             hover="gray-800"
             title="Sign In"
           />
         </div>
       </form>
-    </div>):<Navigate to="/" state={{ from: location }} replace/>
+    </div>
+  ) : (
+    <Navigate to="/" state={{ from: location }} replace />
   );
 };
 

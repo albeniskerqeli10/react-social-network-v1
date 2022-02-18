@@ -1,11 +1,15 @@
+import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
+
 const SmallSpinner = () => {
-    return(
-        <div className="flex justify-center items-center">
-        <div className="relative w-20 h-20 animate-spin rounded-full bg-gradient-to-r from-purple-400 via-primary to-red-400 ">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-light-primary rounded-full border-2 border-white"></div>
-        </div>
+  return (
+    <div className="w-auto z-10 flex flex-row items-center justify-center flex-wrap">
+      <AiOutlineLoading3Quarters
+        color="#2B6BED"
+        className="animate-spin"
+        size={50}
+      />
     </div>
-    )
-  }
-  
-  export default SmallSpinner;
+  );
+};
+
+export default SmallSpinner;

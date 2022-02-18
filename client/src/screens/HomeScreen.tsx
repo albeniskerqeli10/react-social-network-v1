@@ -1,5 +1,5 @@
-import LeftSidebar from '@components/Sidebar/LeftSidebar';
-import RightSidebar from '@components/Sidebar/RightSidebar';
+import LeftSidebar from "@components/Sidebar/LeftSidebar";
+import RightSidebar from "@components/Sidebar/RightSidebar";
 import Feed from "../components/Feed";
 
 const HomeScreen = () => {

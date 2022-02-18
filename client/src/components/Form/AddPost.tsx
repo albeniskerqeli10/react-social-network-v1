@@ -10,74 +10,51 @@ import { useMutation } from "react-query";
 import { queryClient } from "../../App";
 
 interface ISubmitForm {
-  textarea:string;
+  textarea: string;
 }
- function AddPost()  {
+function AddPost() {
   const { register, reset, handleSubmit } = useForm();
   const currentUser = useAuth();
-const [customErr , setCustomErr] = useState('');
+  const [customErr, setCustomErr] = useState("");
 
-  const mutations = useMutation(addPost as any, {
-    // When mutate is called:
-    onMutate: async (newPost:any) => {
-      // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries("posts")
-  
-      // Snapshot the previous value
-      const previousPosts = queryClient.getQueryData("posts")
-  
-      // Optimistically update to the new value
-      queryClient.setQueryData('posts', (old:[] | any) => [...old, newPost])
-  
-      // Return a context object with the snapshotted value
-      return { previousPosts }
-    },
-    // If the mutation fails, use the context returned from onMutate to roll back
-    onError: (err, newPost, context):any => {
-      queryClient.setQueryData('posts', context?.previousPosts)
-    },
+  const { mutate } = useMutation(addPost as any);
 
-  })
-  
-  
-
-
-  const [fileName, setFileName] = useState<Blob | File | string>('');
+  const [fileName, setFileName] = useState<Blob | File | string>("");
   const [selectedImg, setSelectedImg] = useState<string>("");
 
   function onChangeFile(e: React.ChangeEvent<HTMLInputElement>) {
-const target = e.target as HTMLInputElement;
-    const file:File = target.files![0];
-    if(file?.type.match('image.*') ) {
+    const target = e.target as HTMLInputElement;
+    const file: File = target.files![0];
+    if (file?.type.match("image.*")) {
       new Compressor(file, {
         quality: 0.6,
-        success: (compressedResult:File | Blob) => {
-          setFileName(compressedResult );
+        success: (compressedResult: File | Blob) => {
+          setFileName(compressedResult);
         },
       });
-      setCustomErr('');
+      setCustomErr("");
       const reader = new FileReader();
-    reader.onload = function (e: ProgressEvent<FileReader>) {
+      reader.onload = function (e: ProgressEvent<FileReader>) {
         setSelectedImg(e?.target?.result as string);
-    };
-    reader.readAsDataURL(file);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setCustomErr("File should be only image and not other file types");
     }
-    else {
-      setCustomErr('File should be only image and not other file types');
-    }
-
-  };
-
+  }
 
   function submitPost(data: ISubmitForm) {
     // handle the click event
-    const formData:any= new FormData();
+    const formData: any = new FormData();
     if (data.textarea === "") {
       setCustomErr("Write some text or  upload an image  to create a post");
     } else {
       formData.append("text", data.textarea);
       formData.append("image", fileName);
-      mutations.mutate(formData , {
+      mutate(formData, {
+        onSuccess: () => {
+          queryClient.invalidateQueries("posts");
+        },
       });
 
       setSelectedImg("");
@@ -85,7 +62,7 @@ const target = e.target as HTMLInputElement;
       setFileName("");
       reset();
     }
-  };
+  }
   return (
     <div className="w-full min-h-[100px] flex flex-col items-center justify-center  flex-wrap  bg-white rounded-lg border gap-2 border-[#F5F7F9] shadow-md   ">
       <div className="w-full  flex-wrap flex text-center  gap-1 flex-row items-center lg:justify-between ">
@@ -111,7 +88,6 @@ const target = e.target as HTMLInputElement;
           name="upload"
           id="upload"
           title=" "
-        
           onChange={onChangeFile}
           accept="image/x-png,image/gif,image/jpeg"
           hidden
@@ -120,8 +96,8 @@ const target = e.target as HTMLInputElement;
       <div className="w-full flex flex-col flex-wrap items-center justify-center">
         {selectedImg ? <img src={selectedImg} alt="Selected Media" /> : ""}
       </div>
-     {customErr &&  <h1 className="text-sm text-gray-700">{customErr}</h1>}
-      <div className="flex w-full bg-primary flex-row items-center justify-center flex-wrap">
+      {customErr && <h1 className="text-sm text-gray-700">{customErr}</h1>}
+      <div className="flex w-full bg-deepBlue flex-row items-center justify-center flex-wrap">
         <Button
           type="button"
           onClick={handleSubmit(submitPost)}
@@ -136,6 +112,6 @@ const target = e.target as HTMLInputElement;
       </div>
     </div>
   );
-};
+}
 
 export default AddPost;

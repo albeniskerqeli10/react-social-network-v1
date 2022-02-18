@@ -35,7 +35,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js' --only-mapped",
-    "start": " craco start",
+    "start": "cross-env GENERATE_SOURCEMAP=false craco start",
     "build": "cross-env GENERATE_SOURCEMAP=false craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

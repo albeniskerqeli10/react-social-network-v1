@@ -1,3 +1,5 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "appService.deploySubpath": ".",
+  "appService.defaultWebAppToDeploy": "/subscriptions/73864d1c-ea88-438f-bfcf-a84443f12116/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/reactsocialnetwork"
 }

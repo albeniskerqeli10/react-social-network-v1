@@ -86,7 +86,7 @@ export async function likePost (id:string ) {
 
 export async function fetchComments({queryKey}:{queryKey:Array<string | number>}) {
   try{
-    const [_key , id] = queryKey;
+    const [id] = queryKey;
     const res = await AxiosAPI.get(`${process.env.REACT_APP_API_URL}comment/${id}`)
     return res.data
   }
