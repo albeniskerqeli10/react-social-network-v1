@@ -6,10 +6,6 @@ const Post = lazy(() => import("./Post" /* webpackChunkName: "Post" */));
 const PostsList = () => {
   const { data: posts } = useQuery("posts", fetchPosts, {});
 
-  // const slicedPosts = useMemo(() => {
-  //   return posts?.slice(0,20)
-  // },[posts])
-
   return (
     <Suspense fallback={<SmallSpinner />}>
       <div className="flex items-center justify-center flex-wrap w-full">
