@@ -7,8 +7,7 @@
     "start": "ts-node --transpile-only src/index.ts",
     "start:nodemon": "./node_modules/nodemon/bin/nodemon.js",
     "start:prod": "npm run build && node ./dist/src/index.js",
-      "start_windows": "set NODE_ENV=production&&node /dist/src/index.js",
-
+    "start_windows": "set NODE_ENV=production&&node /dist/src/index.js",
     "build": "npx tsc",
     "postinstall": "npx tsc"
   },
