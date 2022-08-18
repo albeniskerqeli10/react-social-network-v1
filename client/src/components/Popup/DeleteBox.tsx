@@ -1,9 +1,9 @@
-import { deletePost } from "@api/PostApi";
-import Button from "@shared/Button";
-import Modal from "@shared/Modal";
+import { deletePost } from "../../api/PostApi";
+import Button from "../../shared/Button";
+import Modal from "../../shared/Modal";
 import { useState } from "react";
-import { useMutation } from "react-query";
-import { queryClient } from "../../App";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../";
 
 type DeleteBoxProps = {
   id: string;
@@ -19,7 +19,7 @@ const DeleteBox = ({ id }: DeleteBoxProps) => {
   const handleDelete = () => {
     deleteMutation.mutate(id, {
       onSuccess: () => {
-        queryClient.invalidateQueries("posts");
+        queryClient.invalidateQueries(["posts"]);
       },
     });
     handleCloseModal();
@@ -71,7 +71,7 @@ const DeleteBox = ({ id }: DeleteBoxProps) => {
           size="base"
           bgColor="bg-deepBlue"
           type="button"
-          onClick={handleDelete}
+          onClick={() => handleDelete}
         />
       </div>
     </Modal>

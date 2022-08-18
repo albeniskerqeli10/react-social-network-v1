@@ -1,4 +1,7 @@
 module.exports = {
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
   theme: {
     extend: {
       colors: {

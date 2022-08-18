@@ -25,3 +25,5 @@ yarn-error.log*
 
 # Tailwind processed CSS 
 index.css
+
+.vercel

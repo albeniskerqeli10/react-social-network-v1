@@ -1,4 +1,4 @@
-import { store } from "@redux/store";
+import { store } from "../redux/store";
 import { AxiosResponse } from "axios";
 import { AuthProps, IUser } from "../types/UserInterfaces";
 import { AxiosAPI, client } from "./base";
@@ -95,9 +95,7 @@ export const loginUser = async (data: AuthProps) => {
     const res: AxiosResponse = await client.post("/auth/login", data, {});
     return res.data;
   } catch (err) {
-    return new Promise((resolve, reject) => {
-      reject(err);
-    });
+    return err;
   }
 };
 
@@ -106,12 +104,17 @@ export const searchUsers = async ({
 }: {
   queryKey: Array<string>;
 }) => {
-  const [query] = queryKey;
+  const [_, query] = queryKey;
 
   try {
     const res: AxiosResponse = await client.get(`/auth/search/${query}`);
     return res;
-  } catch (err) {}
+  } catch (err) {
+    return new Promise((resolve, reject) => {
+      reject(err);
+      console.log(err);
+    });
+  }
 };
 
 export const editUser = async (data: IUser) => {

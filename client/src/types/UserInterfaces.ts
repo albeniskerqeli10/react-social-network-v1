@@ -1,24 +1,24 @@
-import { IPost } from 'types/PostInterfaces';
+import { IPost } from "types/PostInterfaces";
 
 export interface IUser {
   _id: string;
-  username: string ;
+  username: string;
   email: string;
-  avatar: string ;
+  avatar: string;
   password: string;
   accessToken: string;
-  followers:Array<string>;
-  following:Array<string>;
-  posts:Array<IPost>;
+  followers: Array<string>;
+  following: Array<string>;
+  isVerified?: boolean;
+  posts: Array<IPost>;
 }
-export interface LoginProps   {
-  email:string;
-  password:string;
+export interface LoginProps {
+  email: string;
+  password: string;
 }
-
 
 export interface AuthProps {
-  username?:string;
-  password:string;
-  email:string;
+  username?: string;
+  password: string;
+  email: string;
 }

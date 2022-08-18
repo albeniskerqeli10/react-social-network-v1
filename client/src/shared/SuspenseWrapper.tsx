@@ -1,16 +1,16 @@
-import React from 'react'
-import SmallSpinner from './SmallSpinner'
+import { Suspense } from "react";
+import SmallSpinner from "./SmallSpinner";
 
 type SuspenseWrapperProps = {
-    children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
-const SuspenseWrapper = ({children}:SuspenseWrapperProps) => {
+const SuspenseWrapper = ({ children }: SuspenseWrapperProps) => {
   return (
-    <React.Suspense fallback={<SmallSpinner/>}>
-        {children}
-    </React.Suspense>
-  )
-}
+    <div className="w-full h-auto flex items-center justify-center flex-wrap">
+      <Suspense fallback={<SmallSpinner />}>{children}</Suspense>
+    </div>
+  );
+};
 
-export default SuspenseWrapper
+export default SuspenseWrapper;

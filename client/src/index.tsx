@@ -1,18 +1,31 @@
 import "@fontsource/inter";
 import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import App from "./App";
-import { store } from "./redux/store";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration.js";
+// @ts-ignore
+import * as ReactDOMClient from "react-dom/client";
+
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import Loader from "./shared/Loader";
+
 import "./styles/base.css";
 import "./styles/tailwind.css";
-const rootElement = document.getElementById("root");
-if (!rootElement) throw new Error("Failed to find the root element");
-// @ts-ignore
+const App = React.lazy(() => import("./App"));
 
-const root = ReactDOM.createRoot(rootElement);
+const rootElement: any = document.getElementById("root");
+if (!rootElement) throw new Error("Failed to find the root element");
+
+export const queryClient = new QueryClient({
+  // defaultOptions: {
+  //   queries: {
+  //     notifyOnChangeProps: "tracked",
+  //   },
+  // },
+});
+const root: any = ReactDOMClient.createRoot(rootElement);
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <QueryClientProvider client={queryClient}>
+      <App />
+  </QueryClientProvider>
 );
+
+serviceWorkerRegistration.register();

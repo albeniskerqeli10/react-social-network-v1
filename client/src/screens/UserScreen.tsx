@@ -1,14 +1,16 @@
-import { followUser, unfollowUser } from "@api/UserApi";
-import CustomPost from "@components/Post/CustomPost";
-import useAuth from "@hooks/useAuth";
-import useSingleUser, { singleUserKey } from "@hooks/useSingleUser";
-import Button from "@shared/Button";
-import Loader from "@shared/Loader";
+import { followUser, unfollowUser } from "../api/UserApi";
+import useAuth from "../hooks/useAuth";
+import useSingleUser, { singleUserKey } from "../hooks/useSingleUser";
+import Button from "../shared/Button";
+import Loader from "../shared/Loader";
+import SuspenseWrapper from "../shared/SuspenseWrapper";
 import React from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { IPost } from "types/PostInterfaces";
-import { queryClient } from "../App";
+import { queryClient } from "../";
+const CustomPost = React.lazy(() => import("../components/Post/CustomPost"));
+
 const UserScreen = () => {
   const currentUser = useAuth();
   const { id } = useParams() as {
@@ -23,7 +25,7 @@ const UserScreen = () => {
     enabled: false,
 
     onSuccess: () => {
-      queryClient.invalidateQueries(singleUserKey);
+      queryClient.invalidateQueries([singleUserKey]);
     },
   });
 
@@ -34,7 +36,7 @@ const UserScreen = () => {
       enabled: false,
 
       onSuccess: () => {
-        queryClient.invalidateQueries(singleUserKey);
+        queryClient.invalidateQueries([singleUserKey]);
       },
     }
   );
@@ -46,13 +48,16 @@ const UserScreen = () => {
   const handleUnfollow = (e: React.MouseEvent<HTMLButtonElement>) => {
     unfollowRefetch();
   };
-
-  return user ? (
-    <section className="w-full mt-20 min-h-[100vh] bg-slate-50 items-center flex-wrap flex-col justify-center">
+  if (!user) {
+    return <Loader />;
+  }
+  return (
+    <section className="w-full mt-1 min-h-[80vh] bg-slate-50 items-center flex-wrap flex-col justify-center">
       <div className="lg:max-w-4xl max-w-full mx-auto flex items-center justify-center flex-col">
         <div className="flex my-3 py-2   w-full flex-row flex-wrap items-center justify-center gap-3 min-h-[50px] text-slate-900">
           <div className="self-center">
             <img
+              decoding="async"
               className="mx-2 my-1 p-2 w-32 h-32 rounded-full object-center object-cover"
               src={user.avatar as string}
               alt="user avatar"
@@ -121,16 +126,16 @@ const UserScreen = () => {
           </h1>
           <div className="w-full my-5  flex-wrap gap-5 flex flex-row items-center justify-center">
             <div className="w-full   flex items-center justify-center  max-w-full flex-row flex-wrap gap-3 ">
-              {user.posts.map((post: IPost) => (
-                <CustomPost post={post} />
-              ))}
+              <SuspenseWrapper>
+                {user.posts.map((post: IPost) => (
+                  <CustomPost post={post} />
+                ))}
+              </SuspenseWrapper>
             </div>
           </div>
         </div>
       </div>
     </section>
-  ) : (
-    <Loader />
   );
 };
 

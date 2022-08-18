@@ -1,11 +1,11 @@
-import EditProfile from "@components/Form/EditProfile";
-import CustomPost from "@components/Post/CustomPost";
-import useAuth from "@hooks/useAuth";
-import useSingleUser from "@hooks/useSingleUser";
-import Button from "@shared/Button";
-import Loader from "@shared/Loader";
+import EditProfile from "../components/Form/EditProfile";
+import CustomPost from "../components/Post/CustomPost";
+import useAuth from "../hooks/useAuth";
+import useSingleUser from "../hooks/useSingleUser";
+import Button from "../shared/Button";
+import Loader from "../shared/Loader";
 import { useState } from "react";
-import { IPost } from "types/PostInterfaces";
+import { IPost } from "../types/PostInterfaces";
 
 const ProfileScreen = () => {
   const [editProfile, setEditProfile] = useState(false);
@@ -14,12 +14,16 @@ const ProfileScreen = () => {
   const id: string = currentUser?._id;
 
   const { data: user } = useSingleUser({ id });
-  return user ? (
-    <section className="w-full mt-20 min-h-[100vh]  items-center flex-wrap flex-col justify-center">
+  if (!user) {
+    return <Loader />;
+  }
+  return (
+    <section className="w-full min-h-[80vh]  items-center flex-wrap flex-col justify-center">
       <div className="lg:max-w-4xl max-w-full mx-auto flex items-center justify-center flex-col">
         <div className="flex my-3 py-2   w-full flex-row flex-wrap items-center justify-center gap-3 min-h-[50px] text-slate-900">
           <div className="self-center">
             <img
+              decoding="async"
               className="mx-2 my-1 object-center object-cover  p-2 w-32 h-32 rounded-full"
               alt="profile"
               src={user.avatar as string}
@@ -75,8 +79,6 @@ const ProfileScreen = () => {
         </div>
       </div>
     </section>
-  ) : (
-    <Loader />
   );
 };
 

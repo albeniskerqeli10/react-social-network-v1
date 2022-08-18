@@ -1,14 +1,14 @@
-import { editUser } from "@api/UserApi";
-import { addNewUser } from "@redux/slices/userSlice";
-import Button from "@shared/Button";
-import Modal from "@shared/Modal";
+import { editUser } from "../../api/UserApi";
+import { addNewUser } from "../../redux/slices/userSlice";
+import Button from "../../shared/Button";
+import Modal from "../../shared/Modal";
 import Compressor from "compressorjs";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { AuthProps } from "types/UserInterfaces";
-import { queryClient } from "../../App";
+import { queryClient } from "../../";
 const EditProfile = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);

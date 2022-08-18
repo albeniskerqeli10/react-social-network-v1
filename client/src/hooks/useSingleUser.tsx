@@ -1,6 +1,6 @@
-import { fetchSingleUser } from "@api/UserApi";
-import { useQuery } from "react-query";
-import { IUser } from "types/UserInterfaces";
+import { fetchSingleUser } from "../api/UserApi";
+import { useQuery } from "@tanstack/react-query";
+import { IUser } from "../types/UserInterfaces";
 interface SingleUserProps {
   id: string;
   options?: any;
@@ -9,7 +9,7 @@ interface SingleUserProps {
 export const singleUserKey = "FETCH SINGLE USER";
 const useSingleUser = ({ id }: SingleUserProps) => {
   return useQuery([singleUserKey, id], fetchSingleUser, {
-    onSuccess:(data:IUser)=>{}
+    onSuccess: (data: IUser) => {},
   });
 };
 export default useSingleUser;

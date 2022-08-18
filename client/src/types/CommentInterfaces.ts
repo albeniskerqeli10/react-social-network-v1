@@ -1,19 +1,18 @@
-export interface IComment{
-  _id:string;
-  postId?:string;
-  user:string;
+export interface IComment {
+  _id: string;
+  postId?: string;
+  user: string;
   avatar: string;
   username: string;
   content: string;
   createdAt?: Date;
-
 }
 
 export interface CommentsDataProps {
-  data?:IComment[],
+  data?: IComment[];
 }
 
 export interface CommentDataObj extends CommentsDataProps {
-  id:string;
-  content:string;
+  id: string;
+  content: string;
 }

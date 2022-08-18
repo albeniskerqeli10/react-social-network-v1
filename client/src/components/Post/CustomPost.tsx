@@ -1,10 +1,10 @@
 
-import DeleteBox from "@components/Popup/DeleteBox";
-import useAuth from "@hooks/useAuth";
+import DeleteBox from "../../components/Popup/DeleteBox";
+import useAuth from "../../hooks/useAuth";
 import { BiTrash } from '@react-icons/all-files/bi/BiTrash';
-import Avatar from "@shared/Avatar";
+import Avatar from "../../shared/Avatar";
 import React, { memo } from 'react';
-import { IPost } from "types/PostInterfaces";
+import { IPost } from "../../types/PostInterfaces";
 import AddComment from "./AddComment";
 import Comment from './Comment';
 import PostIcons from "./PostIcons";
@@ -44,7 +44,7 @@ const [showPopup , setShowPopup] = React.useState<boolean>(false);
     <h1 className="my-1 mx-2  py-1  text-lg break-all self-start font-normal">{post.text}</h1>
 
     <div className="w-full flex items-center justify-center  flex-col flex-wrap">
-     {post.image &&  <img alt="Random pic" className="w-[600px] max-w-full h-[300px] object-cover hover:brightness-50 ease-in-out duration-200 object-center  " src={post.image} />}
+     {post.image &&  <img  decoding="async" alt="Random pic" className="w-[600px] max-w-full h-[300px] object-cover hover:brightness-50 ease-in-out duration-200 object-center  " src={post.image} />}
 
     </div>
     { <div className="w-full py-2  items-start justify-start">

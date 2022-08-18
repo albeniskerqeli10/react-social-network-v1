@@ -1,14 +1,14 @@
-import { registerUser } from "@api/UserApi";
-import useAuth from "@hooks/useAuth";
-import { addNewUser } from "@redux/slices/userSlice";
-import Button from "@shared/Button";
+import { registerUser } from "../api/UserApi";
+import useAuth from "../hooks/useAuth";
+import { addNewUser } from "../redux/slices/userSlice";
+import Button from "../shared/Button";
 import Compressor from "compressorjs";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AuthProps, IUser } from "types/UserInterfaces";
+import { AuthProps, IUser } from "../types/UserInterfaces";
 
 const RegisterScreen: React.FC = () => {
   const { register, handleSubmit } = useForm();

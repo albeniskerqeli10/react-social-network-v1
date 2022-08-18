@@ -1,72 +1,76 @@
-import DeleteBox from "@components/Popup/DeleteBox";
+import DeleteBox from "../../components/Popup/DeleteBox";
 import { BiTrash } from "@react-icons/all-files/bi/BiTrash";
-import { RootState } from "@redux/store";
-import Avatar from "@shared/Avatar";
-import { lazy, useState } from "react";
+import { RootState } from "../../redux/store";
+import Avatar from "../../shared/Avatar";
+import { lazy, useMemo, memo, useState } from "react";
 import { useSelector } from "react-redux";
+import SmallSpinner from "../../shared/SmallSpinner";
 import { Link, useNavigate } from "react-router-dom";
-import { IPost } from "types/PostInterfaces";
+import { IPost } from "../../types/PostInterfaces";
 import AddComment from "./AddComment";
-import Comment from "./Comment";
 import PostIcons from "./PostIcons";
+// import Img from "react-cool-img";
 
-const Image = lazy(
-  () => import("@shared/Image" /* webpackChunkName: "Image" */)
-);
+import SuspenseWrapper from "../../shared/SuspenseWrapper";
+import Image from "../../shared/Image";
+const Comment = lazy(() => import("./Comment"));
 
-function Post({
-  _id,
-  avatar,
-  username,
-  text,
-  createdAt,
-  image,
-  user,
-  likes,
+type PostProps = {
+  post: IPost;
+};
 
-  comments,
-}: IPost) {
+const Post = ({ post }: PostProps) => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const [showComments, setShowComments] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-
+  const formatedDate = useMemo(
+    () => new Date(post.createdAt as any).toLocaleDateString(),
+    [post.createdAt]
+  );
   const handleCommentState = () => {
-    setShowComments(!showComments);
+    setShowComments((prevCommentState) => !prevCommentState);
   };
 
   const handlePopup = () => {
     setShowPopup(!showPopup);
   };
+
   const navigate = useNavigate();
+  const navigateToUserPage = () => {
+    navigate(currentUser._id === post.user ? "/profile" : `/user/${post.user}`);
+  };
+
   return (
     <article
-      key={_id}
+      key={post._id}
       className="w-full min-h-[100px]   flex flex-col items-start justify-between my-[10px]  flex-wrap bg-white   rounded-sm border border-[#F5F7F9] shadow-box  "
     >
-      <div className="w-full flex  mx-1 text-center  my-4 flex-row items-center justify-between flex-wrap">
-        <div className="w-auto    flex text-center my-2 flex-row items-center  flex-wrap justify-center">
+      <div className="w-full flex  mx-1 text-center  my-1 flex-row items-center justify-between flex-wrap">
+        <div className="w-auto    flex text-center my-1 flex-row items-center  flex-wrap justify-center">
           <Avatar
-            src={avatar}
-            onClick={() => navigate(`/user/${user}`)}
+            src={post.avatar}
+            onClick={navigateToUserPage}
             alt="User avatar"
           />
 
           <div className="flex flex-col items-start justify-center flex-wrap">
-            <Link
-              className="lg:text-xl md:text-md sm:text-sm font-bold break-all"
-              to={user === currentUser._id ? `profile` : `user/${user}`}
-            >
-              {username}
-            </Link>
-            {createdAt && (
-              <h1 className="text-sm">
-                {new Date(createdAt).toLocaleString()}
-              </h1>
-            )}
+            <div className="flex flex-row items-center justify-center gap-2 flex-wrap">
+              <Link
+                className="lg:text-xl md:text-md sm:text-sm font-bold break-all"
+                to={
+                  post.user === currentUser._id
+                    ? `profile`
+                    : `/builduser/${post.user}`
+                }
+              >
+                {post.username}
+              </Link>
+            </div>
+            <h1 className="text-sm">{formatedDate}</h1>
           </div>
         </div>
         <div className="w-auto flex mx-1 items-center justify-center flex-row flex-wrap my-4">
-          {user === currentUser._id ? (
+          {post.user === currentUser._id && (
             <i onClick={handlePopup} className=" cursor-pointer p-1 ">
               {" "}
               <BiTrash
@@ -76,37 +80,39 @@ function Post({
                 size="1.5em"
               />
             </i>
-          ) : (
-            ""
           )}
         </div>
       </div>
 
       <div className="w-full flex-1 flex text-center  flex-wrap flex-col items-center justify-center">
-        <div className="text-center break-all text-sm   my-1 mx-3 self-start font-normal">
-          {text}
+        <div className="text-center break-all text-sm    mx-3  self-start font-normal">
+          <h1 className="pt-1 pb-3 my-1 text-lg"> {post.text}</h1>
         </div>
-        {image && <Image src={image} alt="Avatar" />}
+        {post.image && <Image src={post.image} alt="Image" />}
       </div>
 
       <PostIcons
-        commentIconClick={() => setShowComments(!showComments)}
-        likes={likes}
-        id={_id}
+        commentIconClick={() => setShowComments((comments) => !comments)}
+        likes={post.likes}
+        id={post._id}
       />
 
-      {likes && (
+      {post.likes && (
         <div className="w-full mx-2 flex items-center justify-start">
           <h1 className="text-lg p-1 font-bold text-gray-900">
-            {likes?.length} likes
+            {post.likes?.length} likes
           </h1>
         </div>
       )}
 
-      {<AddComment handleCommentState={handleCommentState} id={_id} />}
-      {showComments && <Comment id={_id} />}
-      {showPopup && <DeleteBox id={_id} />}
+      {<AddComment handleCommentState={handleCommentState} id={post._id} />}
+      {showComments && (
+        <SuspenseWrapper>
+          <Comment id={post._id} />
+        </SuspenseWrapper>
+      )}
+      {showPopup && <DeleteBox id={post._id} />}
     </article>
   );
-}
+};
 export default Post;

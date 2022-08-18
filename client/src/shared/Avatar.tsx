@@ -7,6 +7,7 @@ interface AvatarProps {
 const Avatar = ({ src, alt, onClick, radius }: AvatarProps) => {
   return (
     <img
+      decoding="async"
       width="40"
       height="40"
       className={`cursor-pointer w-10 h-10 rounded-${

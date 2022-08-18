@@ -1,13 +1,13 @@
-import { addPost } from "@api/PostApi";
-import useAuth from "@hooks/useAuth";
+import { addPost } from "../../api/PostApi";
+import useAuth from "../../hooks/useAuth";
 import { FiImage } from "@react-icons/all-files/fi/FiImage";
-import Avatar from "@shared/Avatar";
-import Button from "@shared/Button";
+import Button from "../../shared/Button";
 import Compressor from "compressorjs";
-import { useState } from "react";
+// @ts-ignore
+import { useState, startTransition } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
-import { queryClient } from "../../App";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../";
 
 interface ISubmitForm {
   textarea: string;
@@ -21,23 +21,27 @@ function AddPost() {
 
   const [fileName, setFileName] = useState<Blob | File | string>("");
   const [selectedImg, setSelectedImg] = useState<string>("");
-
   function onChangeFile(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement;
     const file: File = target.files![0];
     if (file?.type.match("image.*")) {
       new Compressor(file, {
+        convertSize: 100,
         quality: 0.6,
         success: (compressedResult: File | Blob) => {
           setFileName(compressedResult);
         },
       });
-      setCustomErr("");
+
       const reader = new FileReader();
       reader.onload = function (e: ProgressEvent<FileReader>) {
         setSelectedImg(e?.target?.result as string);
       };
       reader.readAsDataURL(file);
+
+      startTransition(() => {
+        setCustomErr("");
+      });
     } else {
       setCustomErr("File should be only image and not other file types");
     }
@@ -53,26 +57,28 @@ function AddPost() {
       formData.append("image", fileName);
       mutate(formData, {
         onSuccess: () => {
-          queryClient.invalidateQueries("posts");
+          queryClient.invalidateQueries(["posts"]);
         },
       });
 
-      setSelectedImg("");
+      startTransition(() => {
+        setSelectedImg("");
 
-      setFileName("");
-      reset();
+        setFileName("");
+        reset();
+      });
     }
   }
   return (
     <div className="w-full min-h-[100px] flex flex-col items-center justify-center  flex-wrap  bg-white rounded-lg border gap-2 border-[#F5F7F9] shadow-md   ">
       <div className="w-full  flex-wrap flex text-center  gap-1 flex-row items-center lg:justify-between ">
-        <div className="flex w-auto  items-center justify-center flex-wrap flex-row">
+        {/* <div className="flex w-auto  items-center justify-center flex-wrap flex-row">
           <Avatar alt="User avatar" radius="sm" src={currentUser.avatar} />
-        </div>
-        <div className="flex md:w-auto w-full flex-1  items-center justify-center  flex-wrap flex-row">
+        </div> */}
+        <div className="flex md:w-auto w-full flex-1  items-center justify-between  flex-wrap flex-row">
           <input
             {...register("textarea")}
-            className="flex w-32 md:w-auto  break-all text-ellipsis md:mx-1 mx-2 items-center   md:flex-1  flex-initial font-bold py-3  my-2  px-1  resize-none self-center  "
+            className="flex w-[200px] md:w-32   break-all text-ellipsis md:mx-1 mx-2 items-center   md:flex-1  flex-initial font-bold py-3  my-2  px-1  resize-none self-center  "
             placeholder="Write Something"
           />
           <label
@@ -94,7 +100,11 @@ function AddPost() {
         />
       </div>
       <div className="w-full flex flex-col flex-wrap items-center justify-center">
-        {selectedImg ? <img src={selectedImg} alt="Selected Media" /> : ""}
+        {selectedImg ? (
+          <img decoding="async" src={selectedImg} alt="Selected Media" />
+        ) : (
+          ""
+        )}
       </div>
       {customErr && <h1 className="text-sm text-gray-700">{customErr}</h1>}
       <div className="flex w-full bg-deepBlue flex-row items-center justify-center flex-wrap">

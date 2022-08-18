@@ -1,10 +1,10 @@
-import { likePost, unlikePost } from "@api/PostApi";
-import useAuth from "@hooks/useAuth";
+import { likePost, unlikePost } from "../../api/PostApi";
+import useAuth from "../../hooks/useAuth";
 import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FiMessageSquare } from "@react-icons/all-files/fi/FiMessageSquare";
-import { useMutation } from "react-query";
-import { queryClient } from "../../App";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../";
 
 interface GroupIcons {
   likes?: Array<string>;
@@ -20,15 +20,17 @@ const PostIcons = ({
 }: GroupIcons) => {
   const currentUser = useAuth();
 
-  const likeMutation = useMutation(likePost, {
+  const likeMutation = useMutation({
+    mutationFn: likePost,
     onSuccess: () => {
-      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(["posts"]);
     },
   });
 
-  const unlikeMutation = useMutation(unlikePost, {
+  const unlikeMutation = useMutation({
+    mutationFn: unlikePost,
     onSuccess: () => {
-      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(["posts"]);
     },
   });
 
@@ -51,7 +53,7 @@ const PostIcons = ({
 
         <i className="cursor-pointer">
           <FiMessageSquare
-            onClick={() => commentIconClick}
+            onClick={commentIconClick}
             className="  w-7 text-gray-700 h-7  transition duration-500 ease-in-out transform  hover:scale-100"
           />
         </i>

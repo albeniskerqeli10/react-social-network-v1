@@ -1,10 +1,13 @@
-import { loginUser } from "@api/UserApi";
+import { loginUser } from "../api/UserApi";
 import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
-import { addNewUser } from "@redux/slices/userSlice";
-import Button from "@shared/Button";
-import { useState } from "react";
+import { addNewUser } from "../redux/slices/userSlice";
+import Button from "../shared/Button";
+import SmallSpinner from "@shared/SmallSpinner";
+//@ts-ignore
+
+import { useState, startTransition } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -22,11 +25,13 @@ const LoginScreen = () => {
   const location = useLocation();
   const [customErr, setCustomErr] = useState<string>("");
 
-  const { mutate } = useMutation(loginUser);
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
+  });
 
   const handleLogin = (data: AuthProps) => {
     if (data.email !== "" || data.password !== "") {
-      mutate(
+      loginMutation.mutate(
         {
           email: data.email,
           password: data.password,
@@ -34,18 +39,27 @@ const LoginScreen = () => {
         {
           onSuccess: (data) => {
             dispatch(addNewUser(data as IUser));
-            localStorage.setItem("userDetails", JSON.stringify(data));
+            startTransition(() => {
+              localStorage.setItem("userDetails", JSON.stringify(data));
+              setCustomErr("");
+              console.log("Success");
+            });
             setCustomErr("");
           },
 
-          onError: (error) => {},
+          onError: (err) => {
+            console.log("Not working");
+
+            setCustomErr("Incorrect email or password");
+            console.log(err, "wtf");
+          },
         }
       );
     }
   };
 
   return currentUser === null ? (
-    <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] lg:mt-20">
+    <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] ">
       <form
         onSubmit={handleSubmit(handleLogin)}
         className="flex  w-[100%] md:w-[300px]  bg-white items-center justify-center  flex-col flex-wrap shadow-md rounded min-h-[300px] px-4 py-10 mb-4"

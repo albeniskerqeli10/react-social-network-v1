@@ -1,6 +1,6 @@
-import useAuth from "@hooks/useAuth";
-import { RootState } from "@redux/store";
-import Button from "@shared/Button";
+import useAuth from "../hooks/useAuth";
+import { RootState } from "../redux/store";
+import Button from "../shared/Button";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const SearchScreen = () => {
@@ -25,6 +25,7 @@ const SearchScreen = () => {
           <div className="w-full max-w-sm bg-white rounded-sm min-h-[70px] py-1 my-2 flex flex-row items-center md:justify-between justify-center flex-wrap gap-3 shadow-box ">
             <div className=" w-auto flex flex-1 items-center justify-start flex-wrap flex-row ">
               <img
+                decoding="async"
                 className="w-10 mx-2 h-10 rounded-full object-cover"
                 src={user.avatar as string}
                 alt="User pic"
