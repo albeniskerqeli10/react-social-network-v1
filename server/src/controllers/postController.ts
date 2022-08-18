@@ -1,20 +1,20 @@
-import cloudinary from "cloudinary";
-import { Request, Response } from "express";
-import streamifier from "streamifier";
-import Comment from "../models/Comment";
-import Post, { IPost } from "../models/Post";
-import User from "../models/User";
+import cloudinary from 'cloudinary';
+import { Request, Response } from 'express';
+import streamifier from 'streamifier';
+import Comment from '../models/Comment';
+import Post, { IPost } from '../models/Post';
+import User from '../models/User';
 // Get all posts from database
 
 const getPublicPosts = async (req: Request, res: Response) => {
-  const posts = await Post.find({ visibility: "public" }).sort({
+  const posts = await Post.find({ visibility: 'public' }).sort({
     createdAt: -1,
   });
   if (posts) {
     res.json(posts);
   } else {
     res.status(404);
-    throw new Error("Error while getting posts");
+    throw new Error('Error while getting posts');
   }
 };
 
@@ -25,7 +25,7 @@ const getPrivatePosts = async (req: Request, res: Response) => {
     res.json(posts);
   } else {
     res.status(404);
-    throw new Error("Error while getting posts");
+    throw new Error('Error while getting posts');
   }
 };
 
@@ -35,22 +35,25 @@ const getPostById = async (req: Request, res: Response) => {
   if (post) {
     res.json(post);
   } else {
-    res.status(404).send("Post not found");
+    res.status(404).send('Post not found');
   }
 };
 let streamUpload = (req: any) => {
   return new Promise((resolve, reject) => {
-    let stream = cloudinary.v2.uploader.upload_stream( {
-      folder: "photos"
-    } ,(error, result) => {
-      if (result) {
-        resolve(result);
-      } else {
-        reject(error);
+    let stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: 'photos',
+      },
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
       }
-    });
+    );
 
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
   });
 };
 
@@ -60,20 +63,18 @@ const deletePost = async (req: Request, res: Response) => {
   const userId: string = req?.user?._id;
   const post = await Post.findOne({ _id: postId });
   const postUserId: string | any = post?.user;
-try{
-  if (postUserId?.toString() === userId?.toString()) {
-    const deletePostById = await Post.findByIdAndDelete(postId);
-  const deletePostComments = await Comment.deleteMany({ postID: postId });
-   if(post?.image) {
-    cloudinary.v2.uploader.destroy(post.image);
-   }
-    res.status(200).json({ message: "Post deleted successfully" });
-  } 
-}
-catch(err) {
-  res.status(500).send({ message: "Something goes wrong" });
-}
-
+  try {
+    if (postUserId?.toString() === userId?.toString()) {
+      const deletePostById = await Post.findByIdAndDelete(postId);
+      const deletePostComments = await Comment.deleteMany({ postID: postId });
+      if (post?.image) {
+        cloudinary.v2.uploader.destroy(post.image);
+      }
+      res.status(200).json({ message: 'Post deleted successfully' });
+    }
+  } catch (err) {
+    res.status(500).send({ message: 'Something goes wrong' });
+  }
 };
 
 // A Request which can like a post
@@ -82,7 +83,7 @@ const likePost = async (req: Request, res: Response) => {
     const postById = await Post.findByIdAndUpdate(req.body.id, {
       $addToSet: { likes: [req.user._id] },
     });
-    return res.json({ message: "Post liked successfully", isLiked: true });
+    return res.json({ message: 'Post liked successfully', isLiked: true });
   } catch (err) {
     return err;
   }
@@ -94,7 +95,7 @@ const unlikePost = async (req: Request, res: Response) => {
     const postById = await Post.findByIdAndUpdate(req.body.id, {
       $pull: { likes: req.user._id },
     });
-    return res.json({ message: "Post unliked successfully", isLiked: false });
+    return res.json({ message: 'Post unliked successfully', isLiked: false });
   } catch (err) {
     return err;
   }
@@ -108,9 +109,10 @@ const addPost = async (req: Request, res: Response) => {
     text: req.body.text,
     createdAt: Date.now(),
     visibility: req.body.visibility,
+    isVerified: req.user.isVerified,
   });
-  if(req.file) {
-    const result:any = await streamUpload(req);
+  if (req.file) {
+    const result: any = await streamUpload(req);
     post.image = result.secure_url;
   }
 
@@ -125,15 +127,7 @@ const addPost = async (req: Request, res: Response) => {
   if (newPost) {
     res.json(newPost);
   } else {
-    res.status(404).send("Error while creating post");
+    res.status(404).send('Error while creating post');
   }
 };
-export {
-  addPost,
-  getPublicPosts,
-  unlikePost,
-  likePost,
-  getPrivatePosts,
-  deletePost,
-};
-
+export { addPost, getPublicPosts, unlikePost, likePost, getPrivatePosts, deletePost };

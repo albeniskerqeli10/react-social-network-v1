@@ -18,9 +18,21 @@ dotenv_1.default.config({
 });
 // define port
 var PORT = process.env.PORT;
-// initialize express
 var app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+var whitelist = ['http://localhost:3000'];
+//@ts-ignore
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+};
+app.use((0, cors_1.default)(corsOptions));
 // initialize helmet to secure express app
 app.use((0, helmet_1.default)());
 //connect to db

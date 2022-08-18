@@ -17,17 +17,26 @@ dotenv.config({
 // define port
 const PORT = process.env.PORT;
 
-// initialize express
 const app: Express = express();
-app.use(cors());
+const whitelistDomains = [
+  'http://localhost:3000',
+  'https://react-social-network-101.netlify.app',
+  'https://react-social-network-101.netlify.app/',
+];
+//@ts-ignore
 
-// initialize helmet to secure express app
+app.use(
+  cors({
+    origin: '*',
+  })
+);
+
 app.use(helmet());
-
 //connect to db
-app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
+
 connectDb();
 
 // configure cloudinary
@@ -44,9 +53,8 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Routes
-app.get('/', (req: Request, res: Response) => {
-  res.send('<h1>Social Network API</h1>');
-});
+app.get('/', (req: Request, res: Response) => {});
+
 app.use('/posts', postRoutes);
 app.use('/auth', userRoutes);
 app.use('/comment', commentRoutes);

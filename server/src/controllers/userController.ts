@@ -25,6 +25,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       email: user.email,
       avatar: user.avatar,
       accessToken,
+      isVerified:user.isVerified
     });
   }}
   catch(err){

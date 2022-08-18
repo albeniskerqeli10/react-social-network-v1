@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document, model } from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose, { Schema, Document, model } from 'mongoose';
+import bcrypt from 'bcryptjs';
 import Post from './Post';
 export interface IUser extends Document {
   username: string;
@@ -7,7 +7,8 @@ export interface IUser extends Document {
   email: string;
   avatar?: string;
   matchPassword: any;
-  posts?:Array<object>;
+  isVerified?: boolean;
+  posts?: Array<object>;
 }
 
 const UserSchema: Schema = new Schema(
@@ -28,33 +29,31 @@ const UserSchema: Schema = new Schema(
     avatar: {
       type: String,
       default:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdGr3fTJlsjdAEiSCDznslzUJXqeI22hIB20aDOvQsf9Hz93yoOiLaxnlPEA&s",
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdGr3fTJlsjdAEiSCDznslzUJXqeI22hIB20aDOvQsf9Hz93yoOiLaxnlPEA&s',
     },
-    posts: [
-      {type: Schema.Types.ObjectId,
-      ref: "Post"}
-     ] ,
+    posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     following: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
-    followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    isVerified: 
+      {
+        type: Boolean,
+        default: false,
+      },
   },
 
-  { collection: "users", timestamps: true }
+  { collection: 'users', timestamps: true }
 );
 
 UserSchema.methods.matchPassword = async function (enteredPassword: string) {
-
   return await bcrypt.compare(enteredPassword, this.password);
-}
+};
 
-
-
-
-UserSchema.pre("save", async function (next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -62,6 +61,5 @@ UserSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-
-const User = model<IUser>("User", UserSchema);
+const User = model<IUser>('User', UserSchema);
 export default User;
