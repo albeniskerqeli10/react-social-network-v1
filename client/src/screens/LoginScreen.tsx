@@ -2,9 +2,7 @@ import { loginUser } from "../api/UserApi";
 import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import { addNewUser } from "../redux/slices/userSlice";
 import Button from "../shared/Button";
-import SmallSpinner from "@shared/SmallSpinner";
 //@ts-ignore
-
 import { useState, startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -61,7 +59,7 @@ const LoginScreen = () => {
   return currentUser === null ? (
     <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] ">
       <form
-        onSubmit={handleSubmit(handleLogin)}
+        onSubmit={handleSubmit(handleLogin as any)}
         className="flex  w-[100%] md:w-[300px]  bg-white items-center justify-center  flex-col flex-wrap shadow-md rounded min-h-[300px] px-4 py-10 mb-4"
       >
         <div className="mb-6 w-full flex flex-wrap flex-col items-start justify-center">

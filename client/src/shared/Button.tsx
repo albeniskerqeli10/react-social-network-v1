@@ -1,6 +1,6 @@
 import { IconContext } from "@react-icons/all-files";
 import clsx from "clsx";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 const sizes = {
   base: "py-2 px-4 text-base font-medium",
   xs: "py-2 px-3 text-xs font-normal",

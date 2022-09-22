@@ -2,14 +2,12 @@ import DeleteBox from "../../components/Popup/DeleteBox";
 import { BiTrash } from "@react-icons/all-files/bi/BiTrash";
 import { RootState } from "../../redux/store";
 import Avatar from "../../shared/Avatar";
-import { lazy, useMemo, memo, useState } from "react";
+import { lazy, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import SmallSpinner from "../../shared/SmallSpinner";
 import { Link, useNavigate } from "react-router-dom";
 import { IPost } from "../../types/PostInterfaces";
 import AddComment from "./AddComment";
 import PostIcons from "./PostIcons";
-// import Img from "react-cool-img";
 
 import SuspenseWrapper from "../../shared/SuspenseWrapper";
 import Image from "../../shared/Image";
@@ -45,6 +43,7 @@ const Post = ({ post }: PostProps) => {
       key={post._id}
       className="w-full min-h-[100px]   flex flex-col items-start justify-between my-[10px]  flex-wrap bg-white   rounded-sm border border-[#F5F7F9] shadow-box  "
     >
+   
       <div className="w-full flex  mx-1 text-center  my-1 flex-row items-center justify-between flex-wrap">
         <div className="w-auto    flex text-center my-1 flex-row items-center  flex-wrap justify-center">
           <Avatar
@@ -60,7 +59,7 @@ const Post = ({ post }: PostProps) => {
                 to={
                   post.user === currentUser._id
                     ? `profile`
-                    : `/builduser/${post.user}`
+                    : `/user/${post.user}`
                 }
               >
                 {post.username}

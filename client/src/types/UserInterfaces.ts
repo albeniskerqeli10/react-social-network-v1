@@ -9,7 +9,6 @@ export interface IUser {
   accessToken: string;
   followers: Array<string>;
   following: Array<string>;
-  isVerified?: boolean;
   posts: Array<IPost>;
 }
 export interface LoginProps {

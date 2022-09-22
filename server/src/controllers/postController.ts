@@ -9,7 +9,7 @@ import User from '../models/User';
 const getPublicPosts = async (req: Request, res: Response) => {
   const posts = await Post.find({ visibility: 'public' }).sort({
     createdAt: -1,
-  });
+  }).limit(20);
   if (posts) {
     res.json(posts);
   } else {

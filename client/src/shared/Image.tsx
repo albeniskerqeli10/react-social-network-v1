@@ -1,5 +1,3 @@
-import SmallSpinner from "./SmallSpinner";
-import SuspenseWrapper from "./SuspenseWrapper";
 
 type ImageProps = {
   src: string;

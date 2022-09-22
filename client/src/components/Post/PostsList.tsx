@@ -1,11 +1,8 @@
 import { fetchPosts } from "../../api/PostApi";
-import SmallSpinner from "../../shared/SmallSpinner";
 import SuspenseWrapper from "../../shared/SuspenseWrapper";
 import { IPost } from "../../types/PostInterfaces";
-import { lazy, Suspense, useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { queryClient } from "../../index";
+import { lazy, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 interface PostsListProps {
   data: IPost[];
   refetch: any;
@@ -18,7 +15,6 @@ const PostsList = () => {
   //   await queryClient.prefetchQuery("posts", fetchPosts);
   // };
 
-  const currentUser = useAuth();
   // useEffect(() => {
   //   const prefetchData = async () => {
   //     const data: PostsListProps["data"] = await queryClient.fetchQuery(
@@ -31,9 +27,9 @@ const PostsList = () => {
   //   };
   //   prefetchData();
   // }, []);
-  const {data} = useQuery(["posts"], fetchPosts, {
+useQuery(["posts"], fetchPosts, {
     onSuccess: (data: PostsListProps["data"]) => {
-      setPosts(data?.slice(0, 20));
+      setPosts(data);
     },
     onError: (err: any) => {
       setPosts((posts: IPost[]) => posts);

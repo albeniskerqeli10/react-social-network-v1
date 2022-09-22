@@ -1,5 +1,4 @@
 import { addPost } from "../../api/PostApi";
-import useAuth from "../../hooks/useAuth";
 import { FiImage } from "@react-icons/all-files/fi/FiImage";
 import Button from "../../shared/Button";
 import Compressor from "compressorjs";
@@ -14,7 +13,6 @@ interface ISubmitForm {
 }
 function AddPost() {
   const { register, reset, handleSubmit } = useForm();
-  const currentUser = useAuth();
   const [customErr, setCustomErr] = useState("");
 
   const { mutate } = useMutation(addPost as any);
@@ -110,7 +108,7 @@ function AddPost() {
       <div className="flex w-full bg-deepBlue flex-row items-center justify-center flex-wrap">
         <Button
           type="button"
-          onClick={handleSubmit(submitPost)}
+          onClick={handleSubmit(submitPost as any)}
           bgColor="transparent"
           margin="1"
           title="Post it"

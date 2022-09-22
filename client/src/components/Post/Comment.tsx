@@ -6,12 +6,12 @@ import Avatar from "../../shared/Avatar";
 import { IComment } from "../../types/CommentInterfaces";
 import { singleCommentKey } from "./AddComment";
 import useAuth from "../../hooks/useAuth";
-import { useMemo, useState } from "react";
+import {useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 function Comment({ id }: { id: string }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState<IComment[]>([]);
-  const { data } = useQuery([singleCommentKey, id], fetchComments, {
+useQuery([singleCommentKey, id], fetchComments, {
     onSuccess: (data: IComment[]) => {
       setComments(data?.slice(0, 10));
     },

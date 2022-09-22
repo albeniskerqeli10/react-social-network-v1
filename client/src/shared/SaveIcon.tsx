@@ -1,12 +1,12 @@
 
-import React from 'react';
+import {MouseEventHandler} from 'react';
 
 interface  SaveIconProps {
   color?:string;
   fill?:string;
   width?:string;
   height?:string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const SaveIcon = ({width ,onClick, height, color,fill}:SaveIconProps) => {

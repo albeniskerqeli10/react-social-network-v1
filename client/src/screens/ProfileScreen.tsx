@@ -3,22 +3,19 @@ import CustomPost from "../components/Post/CustomPost";
 import useAuth from "../hooks/useAuth";
 import useSingleUser from "../hooks/useSingleUser";
 import Button from "../shared/Button";
-import Loader from "../shared/Loader";
 import { useState } from "react";
 import { IPost } from "../types/PostInterfaces";
-
+import { Outlet } from "react-router-dom";
 const ProfileScreen = () => {
   const [editProfile, setEditProfile] = useState(false);
   const currentUser = useAuth();
 
   const id: string = currentUser?._id;
 
-  const { data: user } = useSingleUser({ id });
-  if (!user) {
-    return <Loader />;
-  }
+  const {data:user,error} = useSingleUser(id);
+  
   return (
-    <section className="w-full min-h-[80vh]  items-center flex-wrap flex-col justify-center">
+ user ? (<section className="w-full min-h-[80vh]  items-center flex-wrap flex-col justify-center">
       <div className="lg:max-w-4xl max-w-full mx-auto flex items-center justify-center flex-col">
         <div className="flex my-3 py-2   w-full flex-row flex-wrap items-center justify-center gap-3 min-h-[50px] text-slate-900">
           <div className="self-center">
@@ -79,7 +76,7 @@ const ProfileScreen = () => {
         </div>
       </div>
     </section>
-  );
+  ):error ? <h1>Something went wrong</h1>:<Outlet/>)
 };
 
 export default ProfileScreen;

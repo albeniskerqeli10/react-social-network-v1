@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CommentsDataProps } from "../types/CommentInterfaces";
 import { IPost } from "../types/PostInterfaces";
 import { AxiosAPI } from "./base";
@@ -75,6 +76,7 @@ export async function fetchComments({
 }) {
   try {
     const [_, id] = queryKey;
+    //
     const res = await AxiosAPI.get(
       `${process.env.REACT_APP_API_URL}comment/${id}`
     );

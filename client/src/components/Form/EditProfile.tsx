@@ -3,7 +3,7 @@ import { addNewUser } from "../../redux/slices/userSlice";
 import Button from "../../shared/Button";
 import Modal from "../../shared/Modal";
 import Compressor from "compressorjs";
-import React from "react";
+import {useState,ChangeEvent} from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
@@ -11,14 +11,14 @@ import { AuthProps } from "types/UserInterfaces";
 import { queryClient } from "../../";
 const EditProfile = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(true);
-  const [avatar, setAvatar] = React.useState<string | Blob>("");
+  const [open, setOpen] = useState(true);
+  const [avatar, setAvatar] = useState<string | Blob>("");
   const handleClose = () => {
     setOpen(false);
   };
 
   const { register, handleSubmit } = useForm();
-  const handleAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       e.preventDefault();
 
@@ -121,7 +121,7 @@ const EditProfile = () => {
             rounded="md"
             bgColor="bg-deepBlue"
             margin={1}
-            onClick={handleSubmit(handleEdit)}
+            onClick={handleSubmit(handleEdit as any)}
           />
         </div>
       </form>

@@ -1,0 +1,72 @@
+Date : 2022-09-22 02:51:03
+Directory : d:\stuffs\react-social-network\server
+Total : 36 files,  7951 codes, 145 comments, 164 blanks, all 8260 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          4 |      6,034 |          0 |          1 |      6,035 |
+| JavaScript         |         15 |      1,215 |         29 |         15 |      1,259 |
+| TypeScript         |         16 |        688 |         34 |        138 |        860 |
+| JSON with Comments |          1 |         14 |         82 |         10 |        106 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                       | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                          |         36 |      7,951 |        145 |        164 |      8,260 |
+| @types                                                                     |          1 |          9 |          0 |          2 |         11 |
+| @types\express                                                             |          1 |          9 |          0 |          2 |         11 |
+| src                                                                        |         30 |      1,894 |         63 |        151 |      2,108 |
+| src\config                                                                 |          2 |         80 |          3 |          6 |         89 |
+| src\controllers                                                            |          6 |      1,153 |         30 |         72 |      1,255 |
+| src\middlewares                                                            |          6 |        160 |          0 |         22 |        182 |
+| src\models                                                                 |          6 |        289 |          5 |         20 |        314 |
+| src\routes                                                                 |          6 |         83 |          8 |         12 |        103 |
+| src\utils                                                                  |          2 |         30 |          0 |          4 |         34 |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                   | language           | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\stuffs\react-social-network\server\.eslintrc.json                       | JSON               |         33 |          0 |          0 |         33 |
+| d:\stuffs\react-social-network\server\@types\express\index.d.ts            | TypeScript         |          9 |          0 |          2 |         11 |
+| d:\stuffs\react-social-network\server\nodemon.json                         | JSON               |          6 |          0 |          0 |          6 |
+| d:\stuffs\react-social-network\server\package-lock.json                    | JSON               |      5,934 |          0 |          1 |      5,935 |
+| d:\stuffs\react-social-network\server\package.json                         | JSON               |         61 |          0 |          0 |         61 |
+| d:\stuffs\react-social-network\server\src\config\db.js                     | JavaScript         |         65 |          1 |          1 |         67 |
+| d:\stuffs\react-social-network\server\src\config\db.ts                     | TypeScript         |         15 |          2 |          5 |         22 |
+| d:\stuffs\react-social-network\server\src\controllers\commentController.js | JavaScript         |        149 |          4 |          1 |        154 |
+| d:\stuffs\react-social-network\server\src\controllers\commentController.ts | TypeScript         |         58 |          4 |         10 |         72 |
+| d:\stuffs\react-social-network\server\src\controllers\postController.js    | JavaScript         |        239 |          7 |          1 |        247 |
+| d:\stuffs\react-social-network\server\src\controllers\postController.ts    | TypeScript         |        116 |          7 |         11 |        134 |
+| d:\stuffs\react-social-network\server\src\controllers\userController.js    | JavaScript         |        377 |          2 |          1 |        380 |
+| d:\stuffs\react-social-network\server\src\controllers\userController.ts    | TypeScript         |        214 |          6 |         48 |        268 |
+| d:\stuffs\react-social-network\server\src\index.js                         | JavaScript         |         55 |          9 |          1 |         65 |
+| d:\stuffs\react-social-network\server\src\index.ts                         | TypeScript         |         44 |          8 |         14 |         66 |
+| d:\stuffs\react-social-network\server\src\middlewares\authenticate.js      | JavaScript         |         77 |          0 |          1 |         78 |
+| d:\stuffs\react-social-network\server\src\middlewares\authenticate.ts      | TypeScript         |         30 |          0 |         13 |         43 |
+| d:\stuffs\react-social-network\server\src\middlewares\cloudinaryConfig.js  | JavaScript         |         12 |          0 |          1 |         13 |
+| d:\stuffs\react-social-network\server\src\middlewares\cloudinaryConfig.ts  | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\stuffs\react-social-network\server\src\middlewares\upload.js            | JavaScript         |         19 |          0 |          1 |         20 |
+| d:\stuffs\react-social-network\server\src\middlewares\upload.ts            | TypeScript         |         15 |          0 |          4 |         19 |
+| d:\stuffs\react-social-network\server\src\models\Comment.js                | JavaScript         |         16 |          2 |          1 |         19 |
+| d:\stuffs\react-social-network\server\src\models\Comment.ts                | TypeScript         |         22 |          3 |          5 |         30 |
+| d:\stuffs\react-social-network\server\src\models\Post.js                   | JavaScript         |         36 |          0 |          1 |         37 |
+| d:\stuffs\react-social-network\server\src\models\Post.ts                   | TypeScript         |         51 |          0 |          5 |         56 |
+| d:\stuffs\react-social-network\server\src\models\User.js                   | JavaScript         |        105 |          0 |          1 |        106 |
+| d:\stuffs\react-social-network\server\src\models\User.ts                   | TypeScript         |         59 |          0 |          7 |         66 |
+| d:\stuffs\react-social-network\server\src\routes\commentRoutes.js          | JavaScript         |         11 |          1 |          1 |         13 |
+| d:\stuffs\react-social-network\server\src\routes\commentRoutes.ts          | TypeScript         |          9 |          1 |          3 |         13 |
+| d:\stuffs\react-social-network\server\src\routes\postRoutes.js             | JavaScript         |         16 |          1 |          1 |         18 |
+| d:\stuffs\react-social-network\server\src\routes\postRoutes.ts             | TypeScript         |         11 |          1 |          3 |         15 |
+| d:\stuffs\react-social-network\server\src\routes\userRoutes.js             | JavaScript         |         19 |          2 |          1 |         22 |
+| d:\stuffs\react-social-network\server\src\routes\userRoutes.ts             | TypeScript         |         17 |          2 |          3 |         22 |
+| d:\stuffs\react-social-network\server\src\utils\generateToken.js           | JavaScript         |         19 |          0 |          1 |         20 |
+| d:\stuffs\react-social-network\server\src\utils\generateToken.ts           | TypeScript         |         11 |          0 |          3 |         14 |
+| d:\stuffs\react-social-network\server\tsconfig.json                        | JSON with Comments |         14 |         82 |         10 |        106 |
+| Total                                                                      |                    |      7,951 |        145 |        164 |      8,260 |
++----------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

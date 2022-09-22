@@ -1,7 +1,5 @@
 module.exports = {
-  experimental: {
-    optimizeUniversalDefaults: true,
-  },
+
   theme: {
     extend: {
       colors: {
@@ -27,6 +25,8 @@ module.exports = {
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./public/index.html",
+    "./src/components/*.tsx",
+    "./src/components/*.jsx"
   ],
   // Options passed to PurgeCSS
   // },

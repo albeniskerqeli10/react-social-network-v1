@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { store } from "../redux/store";
 import { AxiosResponse } from "axios";
 import { AuthProps, IUser } from "../types/UserInterfaces";

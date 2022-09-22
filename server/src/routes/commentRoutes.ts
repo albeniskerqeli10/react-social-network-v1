@@ -6,7 +6,7 @@ const router = Router();
 
 router.route('/').post(authGuard, addComment);
 router.route('/:id').get(authGuard, getComments);
-router.route('/:id/edit').put(authGuard, editComment);
+router.route('/:id/edit').patch(authGuard, editComment);
 router.route('/:id/delete').delete(authGuard, deleteComment);
 
 export default router;

@@ -180,7 +180,7 @@ const getUserFollowers = async(req:Request, res:Response) => {
   try{
 
 const currentUser:any = await User.findById(req.params.id);
-const followersArr = await User.find({ _id: { $in: currentUser.followers} }).select('-password');
+const followersArr = await User.find({ _id: { $in: currentUser.followers} }).select('-password').limit(10);
 
   
  if(followersArr) {

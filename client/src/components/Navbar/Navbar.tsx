@@ -4,17 +4,17 @@ import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import { BiMessageSquareDetail } from "@react-icons/all-files/bi/BiMessageSquareDetail";
 import { logoutUser } from "../../redux/slices/userSlice";
 import Avatar from "../../shared/Avatar";
+import {Helmet} from 'react-helmet';
 //@ts-ignore
-
-import React, { startTransition } from "react";
+import { startTransition,useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const currentUser = useAuth();
 
-  const [toggleDropdown, setToggleDropdown] = React.useState<boolean>(false);
+  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
   function handleLogout() {
     dispatch(logoutUser());
     startTransition(() => {
@@ -25,16 +25,22 @@ const Navbar = () => {
   function toggleDropdownHandler() {
     setToggleDropdown(!toggleDropdown);
   }
+
+
   return (
     <header className="w-full  lg:sticky  top-0 z-40 shadow-box min-h-[40px]   bg-white flex flex-row flex-wrap items-center justify-center ">
+      <Helmet>
+        <link rel="preload" as="image" href={currentUser?.avatar}/>
+      </Helmet> 
       <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 ">
         <div className="md:w-80 w-auto py-4 flex flex-row items-center justify-center flex-nowrap ">
-          <a
-            href="/"
-            className="mx-2 text-lg text-deepBlue hover:text-slate-900 font-bold "
-          >
-            Social Network
-          </a>
+       
+          <Link to="/"  className="mx-2 text-lg text-deepBlue hover:text-slate-900 font-bold "
+>
+          Social Network
+
+          </Link>
+
         </div>
         {currentUser && (
           <div className="w-auto  gap-2  mx-2 sm:flex hidden items-center border rounded-lg  justify-center bg-light-primary flex-nowrap border-1 border-slate-50 flex-row shadow-box min-h-[40px] ">
@@ -71,11 +77,12 @@ const Navbar = () => {
 
                 <div className="relative inline-block text-left">
                   <div>
-                    <Avatar
+                     <Avatar
                       onClick={toggleDropdownHandler}
                       alt="User Avatar"
                       src={currentUser.avatar}
                     />
+                    {/* <a className="cursor-pointer" onClick={toggleDropdownHandler}>User</a> */}
                   </div>
                   {toggleDropdown && (
                     <div

@@ -3,12 +3,11 @@ import DeleteBox from "../../components/Popup/DeleteBox";
 import useAuth from "../../hooks/useAuth";
 import { BiTrash } from '@react-icons/all-files/bi/BiTrash';
 import Avatar from "../../shared/Avatar";
-import React, { memo } from 'react';
+import { memo,useState} from 'react';
 import { IPost } from "../../types/PostInterfaces";
 import AddComment from "./AddComment";
 import Comment from './Comment';
 import PostIcons from "./PostIcons";
-
 
 interface ICustomPost {
   post: IPost;
@@ -18,8 +17,8 @@ function CustomPost({
   post
 
 }: ICustomPost)  {
-  const [showComments, setShowComments] = React.useState<boolean>(false);
-const [showPopup , setShowPopup] = React.useState<boolean>(false);
+  const [showComments, setShowComments] = useState<boolean>(false);
+const [showPopup , setShowPopup] = useState<boolean>(false);
   const formatedDate= new Date(post.createdAt as Date).toLocaleDateString(); 
   const currentUser = useAuth();
 

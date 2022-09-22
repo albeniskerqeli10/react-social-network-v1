@@ -50,7 +50,7 @@ const AddComment = ({ id, handleCommentState }: AddCommentProps) => {
 
       <form
         className="w-auto  flex-1 flex items-start justify-start"
-        onSubmit={handleSubmit(handleComment)}
+        onSubmit={handleSubmit(handleComment as any)}
       >
         <input
           {...register("content")}

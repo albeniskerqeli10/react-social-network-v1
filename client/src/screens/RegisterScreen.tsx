@@ -3,7 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { addNewUser } from "../redux/slices/userSlice";
 import Button from "../shared/Button";
 import Compressor from "compressorjs";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
@@ -60,7 +60,7 @@ const RegisterScreen: React.FC = () => {
   return (
     <div className="w-full lg:mt-20 flex flex-col items-center justify-center min-h-[80vh]">
       <form
-        onSubmit={handleSubmit(handleRegister)}
+        onSubmit={handleSubmit(handleRegister as any)}
         encType="multipart/form-data"
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >

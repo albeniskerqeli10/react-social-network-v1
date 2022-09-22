@@ -1,11 +1,10 @@
 import Navbar from "./components/Navbar/Navbar";
 import ProtectedRoute from "./screens/ProtectedRoute";
 import Loader from "./shared/Loader";
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-
 const HomeScreen = lazy(
   () => import("./screens/HomeScreen" /* webpackChunkName: "HomeScreen" */)
 );
@@ -38,8 +37,9 @@ function App() {
         <Navbar />
         <Suspense fallback={<Loader />}>
           <Routes>
+            <Route path="/*" element={<h1>Not Found</h1>}/>
             <Route
-              path="/*"
+              path="/"
               element={
                 <ProtectedRoute>
                   <HomeScreen />
@@ -59,9 +59,7 @@ function App() {
             <Route
               path="/user/:id"
               element={
-                <ProtectedRoute>
                   <UserScreen />
-                </ProtectedRoute>
               }
             />
             <Route

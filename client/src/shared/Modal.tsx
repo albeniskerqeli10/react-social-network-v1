@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import {ReactNode} from "react";
+import {createPortal} from "react-dom";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
   onSubmit?: any;
 }
 
 const Modal = ({ open, onClose, onSubmit, children }: ModalProps) => {
   if (open) {
-    return ReactDOM.createPortal(
+    return createPortal(
       <>
         <div
           className="fixed z-10 inset-0 overflow-y-auto"
