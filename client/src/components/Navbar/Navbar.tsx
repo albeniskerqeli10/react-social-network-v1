@@ -8,6 +8,70 @@ import Avatar from "../../shared/Avatar";
 import { startTransition, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
+
+const StyledNavbar = styled.header`
+  width: 100%;
+  min-height: 40px;
+ position:sticky;
+  top:0;
+  left:0;
+  z-index: 100;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  // border-bottom: 1px solid #e6ecf0;
+  // box-shadow: /0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow:0 3px 20px rgb(0 0 0 / 4%);
+
+`
+{/* container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 */ }
+
+
+const StyledNavbarContainer = styled.div`
+  width: 100%;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  flex-direction:wrap;
+  align-items:center;
+  gap:1.25rem;
+  padding: 0 0.75rem;
+
+@media (min-width: 640px) {
+    max-width: 640px;
+  
+}
+
+@media (min-width: 768px) {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  
+}
+
+@media (min-width: 1024px) {
+    max-width: 1024px;
+        justify-content: space-between;
+
+  
+}
+
+@media (min-width: 1280px) {
+    max-width: 1280px;
+  
+}
+
+@media (min-width: 1536px) {
+    max-width: 1536px;
+  
+}
+ 
+ 
+`
+
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -29,9 +93,10 @@ const Navbar = () => {
 
 
   return (
-    <header className="w-full  lg:sticky  top-0 z-40 shadow-box min-h-[40px]   bg-white flex flex-row flex-wrap items-center justify-center ">
+    <StyledNavbar>
 
-      <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 ">
+      {/* <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 "> */}
+      <StyledNavbarContainer>
         <div className="md:w-80 w-auto py-4 flex flex-row items-center justify-center flex-nowrap ">
 
           <Link to="/" className="mx-2 text-lg text-deepBlue hover:text-slate-900 font-bold "
@@ -113,8 +178,8 @@ const Navbar = () => {
             )}
           </>
         </div>
-      </div>
-    </header>
+      </StyledNavbarContainer>
+    </StyledNavbar>
   );
 };
 

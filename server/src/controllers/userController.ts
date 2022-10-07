@@ -9,7 +9,7 @@ import {
   generateAccessToken,
   generateRefreshToken
 } from "../utils/generateToken";
-
+import sharp from "sharp";
 let refreshTokens: Array<object | string> = [];
 // Login Route
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -29,13 +29,14 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     });
   }}
   catch(err){
-    res.status(404).send("Invalid Credentials");
+    res.status(404).json({message:"Invalid email or password"})
 
   }
 };
 
 let streamUpload = (req: any) => {
   return new Promise((resolve, reject) => {
+    const data:any = sharp(req.file.buffer).webp({quality:60}).toBuffer();
     let stream = cloudinary.v2.uploader.upload_stream( {
       folder: "avatars"
     } ,(error, result) => {
@@ -46,7 +47,7 @@ let streamUpload = (req: any) => {
       }
     });
 
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
+      streamifier.createReadStream(data).pipe(stream);
   });
 };
 

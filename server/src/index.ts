@@ -18,19 +18,14 @@ dotenv.config({
 const PORT = process.env.PORT || 6000;
 
 const app: Express = express();
-const whitelistDomains = [
-  'https://react-social-network-101.netlify.app',
-  'https://react-social-network-101.netlify.app/',
-];
+// const whitelistDomains = [
+//   'https://react-social-network-101.netlify.app',
+//   'https://react-social-network-101.netlify.app/',
+// ];
 //@ts-ignore
 
-app.use(
-  cors({
-    origin: whitelistDomains,
-  })
-);
-
-
+// secure cors options
+app.use(cors());
 
 app.use(helmet());
 //connect to db
@@ -51,7 +46,7 @@ cloudinary.v2.config({
 // Other Middlewares
 // Routes
 app.get('/', (req: Request, res: Response) => {
-  return res.send("Hello World");
+  return res.send("Hello Worldssds");
   
 });
 

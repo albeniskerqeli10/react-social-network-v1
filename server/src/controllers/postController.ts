@@ -4,19 +4,31 @@ import streamifier from 'streamifier';
 import Comment from '../models/Comment';
 import Post, { IPost } from '../models/Post';
 import User from '../models/User';
+ import sharp from 'sharp';
 // Get all posts from database
 
 const getPublicPosts = async (req: Request, res: Response) => {
-  const posts = await Post.find({ visibility: 'public' }).sort({
+  const posts = await Post.find({}).sort({
     createdAt: -1,
   }).limit(20);
-  if (posts) {
+  if (posts.length > 0) {
     res.json(posts);
   } else {
-    res.status(404);
-    throw new Error('Error while getting posts');
+    res.status(404).json({ message: 'No posts found' });
   }
 };
+// display likes as array of users 
+const getLikes = async (req: Request, res: Response) => {
+  const post = await Post.findById(req.params.id);
+  if (post) {
+    const likes = await User.find({ _id: { $in: post.likes } });
+    res.json(likes);
+  } else {
+    res.status(404).json({ message: 'Post not found' });
+  }
+}
+
+
 
 // Get posts by user id
 const getPrivatePosts = async (req: Request, res: Response) => {
@@ -35,11 +47,17 @@ const getPostById = async (req: Request, res: Response) => {
   if (post) {
     res.json(post);
   } else {
-    res.status(404).send('Post not found');
+    res.status(404).json({ message: 'Post not found' });
   }
 };
+
+
+
 let streamUpload = (req: any) => {
+
   return new Promise((resolve, reject) => {
+    const data:any = sharp(req.file.buffer).webp({ quality: 70 }).toBuffer();
+
     let stream = cloudinary.v2.uploader.upload_stream(
       {
         folder: 'photos',
@@ -53,7 +71,7 @@ let streamUpload = (req: any) => {
       }
     );
 
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
+    streamifier.createReadStream(data).pipe(stream);
   });
 };
 
@@ -130,4 +148,4 @@ const addPost = async (req: Request, res: Response) => {
     res.status(404).send('Error while creating post');
   }
 };
-export { addPost, getPublicPosts, unlikePost, likePost, getPrivatePosts, deletePost };
+export { addPost, getPublicPosts, unlikePost,getLikes, likePost,getPostById, getPrivatePosts, deletePost };
