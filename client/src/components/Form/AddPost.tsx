@@ -6,12 +6,12 @@ import Compressor from "compressorjs";
 import { useState, startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 
 interface ISubmitForm {
   textarea: string;
 }
-function AddPost() {
+const AddPost = () => {
   const { register, reset, handleSubmit } = useForm();
   const [customErr, setCustomErr] = useState("");
 

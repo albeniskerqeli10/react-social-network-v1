@@ -4,7 +4,7 @@ import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FiMessageSquare } from "@react-icons/all-files/fi/FiMessageSquare";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 
 interface GroupIcons {
   likes?: Array<string>;

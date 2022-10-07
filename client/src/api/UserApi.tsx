@@ -7,7 +7,7 @@ import { AxiosAPI, client } from "./base";
 export const fetchUsers = async () => {
   try {
     const res: AxiosResponse = await AxiosAPI.get(
-      `${process.env.REACT_APP_API_URL}auth/`
+      `${import.meta.env.VITE_API_URL}auth/`
     );
     return res;
   } catch (err) {
@@ -26,7 +26,7 @@ export const fetchFollowers = async ({
     const [_, id] = queryKey;
 
     const res = await AxiosAPI.get(
-      `${process.env.REACT_APP_API_URL}auth/${id}/followers`
+      `${import.meta.env.VITE_API_URL}auth/${id}/followers`
     );
     return res.data;
   } catch (err) {}
@@ -52,7 +52,7 @@ export const followUser = async ({ queryKey }: { queryKey: Array<string> }) => {
   const [_, id] = queryKey;
   try {
     const res = await AxiosAPI.get(
-      `${process.env.REACT_APP_API_URL}auth/${id}/follow`
+      `${import.meta.env.VITE_API_URL}auth/${id}/follow`
     );
 
     return res.data;
@@ -72,7 +72,7 @@ export const unfollowUser = async ({
   const [_, id] = queryKey;
   try {
     const res = await AxiosAPI.get(
-      `${process.env.REACT_APP_API_URL}auth/${id}/unfollow`
+      `${import.meta.env.VITE_API_URL}auth/${id}/unfollow`
     );
 
     return res.data;
@@ -123,7 +123,7 @@ export const editUser = async (data: IUser) => {
   const userID = store.getState().user.currentUser._id;
   try {
     const res = await AxiosAPI.put(
-      `${process.env.REACT_APP_API_URL}auth/${userID}/edit`,
+      `${import.meta.env.VITE_API_URL}auth/${userID}/edit`,
       data,
       {
         headers: {

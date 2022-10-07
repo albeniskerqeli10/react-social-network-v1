@@ -37,19 +37,15 @@ const LoginScreen = () => {
         {
           onSuccess: (data) => {
             dispatch(addNewUser(data as IUser));
+
             startTransition(() => {
-              localStorage.setItem("userDetails", JSON.stringify(data));
               setCustomErr("");
-              console.log("Success");
             });
-            setCustomErr("");
           },
 
           onError: (err) => {
-            console.log("Not working");
 
             setCustomErr("Incorrect email or password");
-            console.log(err, "wtf");
           },
         }
       );
@@ -58,10 +54,13 @@ const LoginScreen = () => {
 
   return currentUser === null ? (
     <div className="w-full flex flex-col  flex-wrap items-center justify-center min-h-[80vh] ">
+
       <form
         onSubmit={handleSubmit(handleLogin as any)}
         className="flex  w-[100%] md:w-[300px]  bg-white items-center justify-center  flex-col flex-wrap shadow-md rounded min-h-[300px] px-4 py-10 mb-4"
       >
+        <h1 className="text-xl py-2 font-bold font-inter">Login</h1>
+
         <div className="mb-6 w-full flex flex-wrap flex-col items-start justify-center">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email
@@ -69,8 +68,8 @@ const LoginScreen = () => {
           <input
             {...register("email", {
               required: true,
-              // pattern:
-              //   /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+              pattern:
+                /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
             })}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
             id="username"
@@ -80,7 +79,7 @@ const LoginScreen = () => {
           />
           {errors.email && (
             <div
-              className=" w-full px-4  flex flex-row flex-1 items-center justify-center  py-4 my-4 leading-normal text-white  bg-red-500 rounded-lg"
+              className=" w-full px-4  flex flex-row flex-1 items-center justify-center  py-4 my-4 leading-normal text-black  bg-red-500 rounded-lg"
               role="alert"
             >
               <p>Please write a valid email</p>
@@ -106,7 +105,7 @@ const LoginScreen = () => {
           />
           {errors.password && (
             <div
-              className="px-4 w-64 text-md  text-center flex flex-row flex-1 items-center justify-center py-2  leading-normal text-white my-4  bg-red-500 rounded-lg"
+              className="px-4 w-64 text-md  text-center flex flex-row flex-1 items-center justify-center py-2  leading-normal text-black my-4  bg-red-500 rounded-lg"
               role="alert"
             >
               <p> Write a password with minimum 8 characters</p>
@@ -115,7 +114,7 @@ const LoginScreen = () => {
         </div>
         {customErr !== "" ? (
           <div
-            className="px-4  flex flex-row flex-wrap flex-1 items-center justify-between py-4 mb-4 leading-normal text-white  bg-red-500 rounded-lg"
+            className="px-4  flex flex-row flex-wrap flex-1 items-center justify-between py-4 mb-4 leading-normal text-black  bg-red-500 rounded-lg"
             role="alert"
           >
             <p>{customErr}</p>

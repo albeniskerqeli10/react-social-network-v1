@@ -19,14 +19,8 @@ module.exports = {
   variants: {},
   plugins: [],
   content: [
-    "./src/**/*.html",
-    "./src/**/*.js",
-    "./src/**/*.jsx",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./public/index.html",
-    "./src/components/*.tsx",
-    "./src/components/*.jsx"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   // Options passed to PurgeCSS
   // },

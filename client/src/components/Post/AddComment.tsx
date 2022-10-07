@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { CommentDataObj, IComment } from "types/CommentInterfaces";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 
 export const singleCommentKey = "SINGLE COMMENT KEY";
 

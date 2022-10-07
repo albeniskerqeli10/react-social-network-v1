@@ -31,6 +31,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addNewUser: (state, { payload }: PayloadAction<IUser>) => {
+    localStorage.setItem("userDetails", JSON.stringify(payload));
+
       state.currentUser = payload;
     },
     logoutUser: (state) => {

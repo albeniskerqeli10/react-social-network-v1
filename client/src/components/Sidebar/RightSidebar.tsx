@@ -2,26 +2,30 @@ import { fetchFollowers } from "../../api/UserApi";
 import useAuth from "../../hooks/useAuth";
 import SuspenseWrapper from "../../shared/SuspenseWrapper";
 // @ts-ignore
-import { lazy, useState } from "react";
+import { lazy, useTransition, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IUser } from "types/UserInterfaces";
+import { IUser } from "../../types/UserInterfaces";
+import SmallSpinner from "../../shared/SmallSpinner";
 interface RightSidebarProps {
   data: Array<IUser>;
   length: number;
 }
 const UserList = lazy(() => import("./UserList"));
 const RightSidebar = () => {
+  const [isPending, setTransition] = useTransition();
   const [followers, setFollowers] = useState<any>([]);
   const singleUserKey = "SINGLE USER KEY";
   const currentUser = useAuth();
-useQuery(
+  useQuery(
     [singleUserKey, currentUser._id],
     fetchFollowers,
     {
       refetchOnWindowFocus: false,
 
       onSuccess: (data: RightSidebarProps) => {
-        setFollowers(data.data);
+        setTransition(() => {
+          setFollowers(data.data);
+        });
       },
     }
   );
@@ -35,20 +39,18 @@ useQuery(
             Followers
           </h1>
         </div>
-        {followers.length !== 0 && (
-          <SuspenseWrapper>
-            {followers?.map((user: IUser) => (
-              <div
-                key={user._id}
-                className="flex flex-row w-full  min-h-[50px] py-1 justify-center max-w-[70%]  items-center"
-              >
-                <div className="w-full  flex flex-row items-center 	justify-center flex-wrap ">
-                  <UserList key={user._id} user={user} />
-                </div>
+        <SuspenseWrapper>
+          {followers?.map((user: IUser) => (
+            <div
+              key={user._id}
+              className="flex flex-row w-full  min-h-[50px] py-1 justify-center max-w-[70%]  items-center"
+            >
+              <div className="w-full  flex flex-row items-center 	justify-center flex-wrap ">
+                <UserList key={user._id} user={user} />
               </div>
-            ))}
-          </SuspenseWrapper>
-        )}
+            </div>
+          ))}
+        </SuspenseWrapper>
       </div>
     </aside>
   );

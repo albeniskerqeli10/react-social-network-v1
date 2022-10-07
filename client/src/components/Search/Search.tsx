@@ -20,7 +20,7 @@ const Search = () => {
     onSuccess: ({ data }: SearchProps) => {
       dispatch(updateUsersList(data));
     },
-    onError: ({ err }) => {},
+    onError: ({ err }) => { },
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -36,7 +36,7 @@ const Search = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit }>
+    <form  onSubmit={handleSubmit}>
       <SearchField value={query} onChange={handleChange} />
     </form>
   );

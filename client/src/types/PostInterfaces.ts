@@ -1,4 +1,4 @@
-import { IComment } from "types/CommentInterfaces";
+import { IComment } from "../types/CommentInterfaces";
 
 export interface IPost {
   _id: string;

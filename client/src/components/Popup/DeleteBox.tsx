@@ -3,7 +3,7 @@ import Button from "../../shared/Button";
 import Modal from "../../shared/Modal";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 
 type DeleteBoxProps = {
   id: string;
@@ -20,9 +20,10 @@ const DeleteBox = ({ id }: DeleteBoxProps) => {
     deleteMutation.mutate(id, {
       onSuccess: () => {
         queryClient.invalidateQueries(["posts"]);
+        handleCloseModal();
+
       },
     });
-    handleCloseModal();
   };
   return (
     <Modal open={open} onClose={handleCloseModal}>

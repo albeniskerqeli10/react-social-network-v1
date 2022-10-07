@@ -43,7 +43,7 @@ const Post = ({ post }: PostProps) => {
       key={post._id}
       className="w-full min-h-[100px]   flex flex-col items-start justify-between my-[10px]  flex-wrap bg-white   rounded-sm border border-[#F5F7F9] shadow-box  "
     >
-   
+
       <div className="w-full flex  mx-1 text-center  my-1 flex-row items-center justify-between flex-wrap">
         <div className="w-auto    flex text-center my-1 flex-row items-center  flex-wrap justify-center">
           <Avatar

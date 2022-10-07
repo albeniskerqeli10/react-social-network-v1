@@ -1,7 +1,7 @@
 import { BiTrash } from "@react-icons/all-files/bi/BiTrash";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteComment, fetchComments } from "../../api/PostApi";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 import Avatar from "../../shared/Avatar";
 import { IComment } from "../../types/CommentInterfaces";
 import { singleCommentKey } from "./AddComment";

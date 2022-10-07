@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 const HomeScreen = lazy(
   () => import("./screens/HomeScreen" /* webpackChunkName: "HomeScreen" */)
 );
@@ -30,51 +31,68 @@ const ChatScreen = lazy(
   () => import("./screens/ChatScreen" /* webpackChunkName: "ChatScreen" */)
 );
 
+export const queryClient = new QueryClient({
+  // defaultOptions: {
+  //   queries: {
+  //     notifyOnChangeProps: "tracked",
+  //   },
+  // },
+});
+
+
+
 function App() {
+
   return (
     <Router>
       <Provider store={store}>
-        <Navbar />
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/*" element={<h1>Not Found</h1>}/>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <HomeScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/login" element={<LoginScreen />} />
-            <Route path="/register" element={<RegisterScreen />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfileScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/user/:id"
-              element={
-                  <UserScreen />
-              }
-            />
-            <Route
-              path="/messages"
-              element={
-                <ProtectedRoute>
-                  <ChatScreen />
-                </ProtectedRoute>
-              }
-            />
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
 
-            <Route path="/search/:query" element={<SearchScreen />} />
-          </Routes>
-        </Suspense>
+          <Suspense fallback={<Loader />}>
+
+            <Routes>
+              <Route path="/*" element={<h1>Not Found</h1>} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <HomeScreen />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/login" element={<LoginScreen />} />
+              <Route path="/register" element={<RegisterScreen />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfileScreen />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/user/:id"
+                element={
+                  <UserScreen />
+                }
+              />
+              <Route
+                path="/messages"
+                element={
+                  <ProtectedRoute>
+                    <ChatScreen />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="/search/:query" element={<SearchScreen />} />
+            </Routes>
+          </Suspense>
+        </QueryClientProvider>
       </Provider>
+
+
     </Router>
   );
 }

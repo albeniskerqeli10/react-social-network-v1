@@ -2,13 +2,12 @@ import { followUser, unfollowUser } from "../api/UserApi";
 import useAuth from "../hooks/useAuth";
 import useSingleUser, { singleUserKey } from "../hooks/useSingleUser";
 import Button from "../shared/Button";
-import { Helmet } from "react-helmet";
 import SuspenseWrapper from "../shared/SuspenseWrapper";
-import {lazy, MouseEvent} from "react";
+import { lazy, MouseEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { IPost } from "types/PostInterfaces";
-import { queryClient } from "../";
+import { IPost } from "../types/PostInterfaces";
+import { queryClient } from "../App";
 const CustomPost = lazy(() => import("../components/Post/CustomPost"));
 
 const UserScreen = () => {
@@ -18,7 +17,7 @@ const UserScreen = () => {
   };
   const followKey = "FOLLOW KEY";
   const unfollowKey = "UNFOLLOW KEY";
-  const {data:user,error} = useSingleUser(id);
+  const { data: user, error } = useSingleUser(id);
   const { refetch: followRefetch } = useQuery([followKey, id], followUser, {
     enabled: false,
 
@@ -48,13 +47,10 @@ const UserScreen = () => {
   };
 
 
- 
+
   return (
-    
- user ? (<section className="w-full mt-1 min-h-[80vh] bg-slate-50 items-center flex-wrap flex-col justify-center">
-  <Helmet>
-        <link rel="preload" as="image" href={currentUser?.avatar}/>
-      </Helmet>
+
+    user ? (<section className="w-full mt-1 min-h-[80vh] bg-slate-50 items-center flex-wrap flex-col justify-center">
       <div className="lg:max-w-4xl max-w-full mx-auto flex items-center justify-center flex-col">
         <div className="flex my-3 py-2   w-full flex-row flex-wrap items-center justify-center gap-3 min-h-[50px] text-slate-900">
           <div className="self-center">
@@ -69,8 +65,8 @@ const UserScreen = () => {
             <div className="flex items-center w-full flex-wrap md:justify-start justify-center  gap-3">
               <h1 className="font-bold text-lg">{user.username}</h1>
               {user._id === currentUser._id ? null : user?.followers.find(
-                  (follow: string) => follow === currentUser._id
-                ) ? (
+                (follow: string) => follow === currentUser._id
+              ) ? (
                 <Button
                   bgColor="bg-deepBlue"
                   margin="1"
@@ -80,8 +76,8 @@ const UserScreen = () => {
                   title="Unfollow"
                 />
               ) : user?.following?.find(
-                  (follow: string) => follow === currentUser._id
-                ) ? (
+                (follow: string) => follow === currentUser._id
+              ) ? (
                 <Button
                   bgColor="bg-deepBlue"
                   margin="1"
@@ -138,7 +134,7 @@ const UserScreen = () => {
         </div>
       </div>
     </section>
-  ):error ? <h1>User not Exist</h1>:<></>);
+    ) : error ? <h1>User not Exist</h1> : <></>);
 };
 
 export default UserScreen;

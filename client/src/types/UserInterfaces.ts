@@ -1,4 +1,4 @@
-import { IPost } from "types/PostInterfaces";
+import { IPost } from "../types/PostInterfaces";
 
 export interface IUser {
   _id: string;

@@ -1,18 +1,19 @@
-
 type ImageProps = {
   src: string;
   alt: string;
 };
 
+
+
+
 const Image = ({ src, alt }: ImageProps) => {
   return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      width="500"
-      className="object-cover bg-black  my-3 w-[500px] max-w-full  h-auto"
-    />
+    <>
+      <img src={src} width="480" height="640" className="aspect-auto px-2 max-w-full max-h-full object-center  object-cover" decoding="async" />
+
+    </>
+
+
   );
 };
 

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { AuthProps } from "types/UserInterfaces";
-import { queryClient } from "../../";
+import { queryClient } from "../../App";
 const EditProfile = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
