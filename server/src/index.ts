@@ -25,7 +25,9 @@ const app: Express = express();
 //@ts-ignore
 
 // secure cors options
-app.use(cors());
+app.use(cors({
+  origin: '*',
+}));
 
 app.use(helmet());
 //connect to db
