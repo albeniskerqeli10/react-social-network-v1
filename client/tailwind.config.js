@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
 
   theme: {
@@ -21,6 +22,8 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{html,js,jsx}",
+
   ],
   // Options passed to PurgeCSS
   // },

@@ -7,18 +7,18 @@ import { IUser } from "../types/UserInterfaces";
 // }
 
 export const singleUserKey = "FETCH SINGLE USER";
-const useSingleUser = (id:string) => {
+const useSingleUser = (id: string) => {
 
-  const {data,isError:error}= useQuery([singleUserKey, id], fetchSingleUser, {
-    onSuccess:(data:IUser) => {
+  const { data, isError: error } = useQuery([singleUserKey, id], fetchSingleUser, {
+    onSuccess: (data: IUser) => {
 
     }
-   
- 
-   
-    
+
+
+
+
   });
 
-  return {data,error}
+  return { data, error }
 };
 export default useSingleUser;

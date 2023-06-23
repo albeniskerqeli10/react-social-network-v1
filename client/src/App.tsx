@@ -86,7 +86,12 @@ function App() {
                 }
               />
 
-              <Route path="/search/:query" element={<SearchScreen />} />
+              <Route path="/search/:query" element={
+
+                <ProtectedRoute>
+                  <SearchScreen />
+                </ProtectedRoute>
+              } />
             </Routes>
           </Suspense>
         </QueryClientProvider>

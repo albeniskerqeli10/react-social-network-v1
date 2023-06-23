@@ -35,7 +35,7 @@ const PostIcons = ({
   });
 
   return (
-    <div className="w-full  mx-1 py-4 flex text-center flex-row items-center justify-between">
+    <div className="w-full   py-4 flex text-center flex-row items-center justify-between">
       <div className="w-auto flex mx-2 flex-row items-center gap-2 justify-center">
         <i className="cursor-pointer">
           {likes?.find((like) => like === currentUser._id) ? (

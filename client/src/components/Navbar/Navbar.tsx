@@ -8,68 +8,8 @@ import Avatar from "../../shared/Avatar";
 import { startTransition, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from 'styled-components';
-
-const StyledNavbar = styled.header`
-  width: 100%;
-  min-height: 40px;
- position:sticky;
-  top:0;
-  left:0;
-  z-index: 100;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  // border-bottom: 1px solid #e6ecf0;
-  // box-shadow: /0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  box-shadow:0 3px 20px rgb(0 0 0 / 4%);
-
-`
-{/* container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 */ }
 
 
-const StyledNavbarContainer = styled.div`
-  width: 100%;
-  display:flex;
-  flex-direction:row;
-  justify-content:center;
-  flex-direction:wrap;
-  align-items:center;
-  gap:1.25rem;
-  padding: 0 0.75rem;
-
-@media (min-width: 640px) {
-    max-width: 640px;
-  
-}
-
-@media (min-width: 768px) {
-    max-width: 768px;
-    margin-left: auto;
-    margin-right: auto;
-  
-}
-
-@media (min-width: 1024px) {
-    max-width: 1024px;
-        justify-content: space-between;
-
-  
-}
-
-@media (min-width: 1280px) {
-    max-width: 1280px;
-  
-}
-
-@media (min-width: 1536px) {
-    max-width: 1536px;
-  
-}
- 
- 
-`
 
 
 
@@ -79,8 +19,9 @@ const Navbar = () => {
 
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
   function handleLogout() {
-    dispatch(logoutUser());
     startTransition(() => {
+      dispatch(logoutUser());
+
       setToggleDropdown(!toggleDropdown);
     });
   }
@@ -93,11 +34,9 @@ const Navbar = () => {
 
 
   return (
-    <StyledNavbar>
-
-      {/* <div className=" container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5 "> */}
-      <StyledNavbarContainer>
-        <div className="md:w-80 w-auto py-4 flex flex-row items-center justify-center flex-nowrap ">
+    <header className="w-full  lg:sticky  top-0 z-40 shadow-box min-h-[40px]   bg-white flex flex-row flex-wrap items-center  justify-center">
+      <div className="container md:mx-auto flex flex-row items-center lg:justify-between justify-center   flex-wrap  px-3  gap-5">
+        <div className="md:w-60 w-auto py-4 flex flex-row items-center justify-center flex-nowrap ">
 
           <Link to="/" className="mx-2 text-lg text-deepBlue hover:text-slate-900 font-bold "
           >
@@ -107,14 +46,14 @@ const Navbar = () => {
 
         </div>
         {currentUser && (
-          <div className="w-auto  gap-2  mx-2 sm:flex hidden items-center border rounded-lg  justify-center bg-light-primary flex-nowrap border-1 border-slate-50 flex-row shadow-box min-h-[40px] ">
+          <div className="w-[450px]   gap-2   sm:flex hidden items-center border rounded-md  justify-start bg-light-primary flex-nowrap  border-neutral-200 flex-row shadow-box min-h-[40px]  ">
             <i className="mx-2 flex items-center justify-center">
               <AiOutlineSearch className="text-primary font-bold" />
             </i>
             <Search />
           </div>
         )}
-        <div className="md:w-80 w-auto  flex flex-row items-center gap-3 justify-center text-md sm:flex-wrap flex-nowrap px-3 my-2">
+        <div className={`${currentUser ? "md:w-[13.2rem]" : "md:w-auto"} w-auto  flex flex-row items-center gap-3 justify-center text-md sm:flex-wrap flex-nowrap px-3 my-2`}>
           <>
             {currentUser === null ? (
               <>
@@ -133,7 +72,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <li className="list-none p-2 bg-light-primary rounded-full shadow-box    mx-1 ">
+                <li className="list-none p-2 bg-light-primary rounded-full shadow-box ">
                   <Link to="/messages">
                     <BiMessageSquareDetail size="1.5em " color="#232324" />
                   </Link>
@@ -178,8 +117,8 @@ const Navbar = () => {
             )}
           </>
         </div>
-      </StyledNavbarContainer>
-    </StyledNavbar>
+      </div>
+    </header>
   );
 };
 

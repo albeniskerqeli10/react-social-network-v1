@@ -4,7 +4,7 @@ import Avatar from "../../shared/Avatar";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { CommentDataObj, IComment } from "types/CommentInterfaces";
+import { CommentDataObj, IComment } from "../../types/CommentInterfaces";
 import { queryClient } from "../../App";
 
 export const singleCommentKey = "SINGLE COMMENT KEY";
@@ -23,7 +23,7 @@ const AddComment = ({ id, handleCommentState }: AddCommentProps) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries([singleCommentKey]);
     },
-    onError: (err) => {},
+    onError: (err) => { },
   });
 
   const handleComment = (data: IComment) => {
@@ -54,7 +54,7 @@ const AddComment = ({ id, handleCommentState }: AddCommentProps) => {
       >
         <input
           {...register("content")}
-          className="w-full max-w-[80%] flex-1 md:w-full py-2  bg-light-primary text-gray-900 placeholder-gray-900 border border-gray-300  focus:shadow-outline rounded-lg shadow-box "
+          className="w-full max-w-[96%] flex-1 mr-2  md:w-full py-2  bg-light-primary text-gray-900 placeholder-gray-900 border border-neutral-300  focus:shadow-outline rounded-md shadow-box "
           placeholder="   Write a comment"
         />
       </form>

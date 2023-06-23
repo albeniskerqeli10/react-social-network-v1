@@ -17,11 +17,10 @@ const DeleteBox = ({ id }: DeleteBoxProps) => {
   const deleteMutation = useMutation(deletePost);
 
   const handleDelete = () => {
-    deleteMutation.mutate(id, {
+    ; deleteMutation.mutate(id, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
+        queryClient.invalidateQueries();
         handleCloseModal();
-
       },
     });
   };
@@ -72,7 +71,7 @@ const DeleteBox = ({ id }: DeleteBoxProps) => {
           size="base"
           bgColor="bg-deepBlue"
           type="button"
-          onClick={() => handleDelete}
+          onClick={handleDelete}
         />
       </div>
     </Modal>

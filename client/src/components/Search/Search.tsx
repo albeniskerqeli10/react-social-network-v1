@@ -36,7 +36,7 @@ const Search = () => {
     }
   };
   return (
-    <form  onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <SearchField value={query} onChange={handleChange} />
     </form>
   );

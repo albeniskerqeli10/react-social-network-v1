@@ -36,14 +36,15 @@ const LoginScreen = () => {
         },
         {
           onSuccess: (data) => {
-            dispatch(addNewUser(data as IUser));
-
             startTransition(() => {
+              dispatch(addNewUser(data as IUser));
               setCustomErr("");
             });
           },
 
           onError: (err) => {
+
+            console.log(err, 'Error');
 
             setCustomErr("Incorrect email or password");
           },

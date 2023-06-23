@@ -12,7 +12,6 @@ interface PostsListProps {
 const Post = lazy(() => import("./Post" /* webpackChunkName: "Post" */));
 const PostsList = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [isPending, setTransition] = useTransition();
   // @ts-ignore
   // const prefetchPosts = async () => {
   //   await queryClient.prefetchQuery("posts", fetchPosts);
@@ -35,8 +34,8 @@ const PostsList = () => {
       setPosts(data);
     },
 
-    onSettled: () => {
-      setPosts((posts) => posts)
+    onError: (err) => {
+      alert("Error fetching posts");
     }
 
   });
@@ -46,7 +45,7 @@ const PostsList = () => {
 
       <SuspenseWrapper>
 
-        {posts.map((post: IPost) => (
+        {posts?.map((post: IPost) => (
           <Post key={post._id} post={post} />
         ))}
       </SuspenseWrapper>

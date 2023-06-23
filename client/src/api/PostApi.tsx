@@ -21,6 +21,7 @@ export async function addPost(data: IPost[]) {
   return await AxiosAPI.post(`${import.meta.env.VITE_API_URL}posts`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "Access-Control-Allow-Origin": "*"
     },
   });
 }

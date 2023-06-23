@@ -41,10 +41,10 @@ const Post = ({ post }: PostProps) => {
   return (
     <article
       key={post._id}
-      className="w-full min-h-[100px]   flex flex-col items-start justify-between my-[10px]  flex-wrap bg-white   rounded-sm border border-[#F5F7F9] shadow-box  "
+      className="w-full min-h-[50px]   flex flex-col items-start justify-between my-[10px]  flex-wrap bg-white   rounded-sm border border-neutral-200 shadow-box  "
     >
 
-      <div className="w-full flex  mx-1 text-center  my-1 flex-row items-center justify-between flex-wrap">
+      <div className="w-full flex border-red-600  text-center  my-1 flex-row items-center justify-between flex-wrap">
         <div className="w-auto    flex text-center my-1 flex-row items-center  flex-wrap justify-center">
           <Avatar
             src={post.avatar}
@@ -85,7 +85,7 @@ const Post = ({ post }: PostProps) => {
 
       <div className="w-full flex-1 flex text-center  flex-wrap flex-col items-center justify-center">
         <div className="text-center break-all text-sm    mx-3  self-start font-normal">
-          <h1 className="pt-1 pb-3 my-1 text-lg"> {post.text}</h1>
+          <h1 className="pt-1 pb-2 my-1 text-lg font-bold"> {post.text}</h1>
         </div>
         {post.image && <Image src={post.image} alt="Image" />}
       </div>
@@ -98,18 +98,20 @@ const Post = ({ post }: PostProps) => {
 
       {post.likes && (
         <div className="w-full mx-2 flex items-center justify-start">
-          <h1 className="text-lg p-1 font-bold text-gray-900">
-            {post.likes?.length} likes
+          <h1 className="text-[16px] p-1 font-bold text-gray-900">
+            {post?.likes?.length > 1 ? `${post.likes.length} likes` : `${post.likes.length} like`}
           </h1>
         </div>
       )}
 
       {<AddComment handleCommentState={handleCommentState} id={post._id} />}
-      {showComments && (
-        <SuspenseWrapper>
+      <SuspenseWrapper>
+
+        {showComments && (
           <Comment id={post._id} />
-        </SuspenseWrapper>
-      )}
+        )}
+      </SuspenseWrapper>
+
       {showPopup && <DeleteBox id={post._id} />}
     </article>
   );
